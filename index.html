@@ -11,6 +11,15 @@
 
   gtag('config', 'G-255F2WVWER');
 </script>
+    <script>
+  // 주소창의 # 뒷부분이 바뀔 때마다 실행됩니다.
+  window.addEventListener('hashchange', function() {
+    gtag('event', 'page_view', {
+      page_path: location.pathname + location.hash,
+      page_title: document.title
+    });
+  });
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SEE-SAW - 청년 참여 구조</title>
