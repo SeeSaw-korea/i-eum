@@ -418,9 +418,9 @@ const TypeTest: React.FC = () => {
             </div>
 
             {[
-              { num: '2만원', label: '일겹이 1인분 가격\n친구랑 한 번에 5만 원', source: '* 2026년 1월 기준 외식물가 통계' },
+              { num: '2만원', label: '삼겹살 1인분 가격\n친구랑 한번 외식하는데 5만원', source: '* 2026년 1월 기준 외식물가 통계' },
               { num: '70만원', label: '대학가 평균 원세\n관리비, 공과금 빼면 식비가 사라져요', source: '* 서울 주요 대학가 원룸 평균' },
-              { num: '62%', label: '"돈 때문에 인간관계를 줄였다"고 답한\n2030 청년 비율', source: '* 청년사회단체 씨소 자체 조사' },
+              { num: '62%', label: '"돈 때문에 인간관계를 줄였다"고 답한\n2030 청년 비율', source: '* 통계청 「사회조사」 (2024)' },
             ].map((s, i) => (
               <div key={i} style={{ background: `linear-gradient(135deg,${LIGHT_AMBER},${WARM})`, borderRadius: 16, padding: 18, margin: '10px 0', borderLeft: `4px solid ${AMBER}` }}>
                 <span style={{ fontWeight: 700, fontSize: 32, color: AMBER, display: 'block', lineHeight: 1, letterSpacing: -1 }}>{s.num}</span>
@@ -440,9 +440,9 @@ const TypeTest: React.FC = () => {
             </div>
 
             {[
-              { num: '01', title: '대학의 주식 안 비싸 지원 확대', detail: '학식 이용 식권 발행처의 10만 원 지원. 컵라면이 아니라 제대로 된 한 끼를 먹을 권리를 보장해주세요.' },
-              { num: '02', title: '청년 주거비 월세지원금 증액', detail: '대학가 원룸 인근 월세 안심전 도입. 서울 지원금을 현재 20만원에서 35만원으로 확대해주세요.' },
-              { num: '03', title: '청년 사회적 고립 방지 예산 확보', detail: '무료 청년 커뮤니티 공간, 문화바우처 확대. 돈 없이도 친구를 못 만드는 일이 없도록 해주세요.' },
+              { num: '01', title: '대학생 실질 식비 지원 확대', detail: '학식 이용 식권 바우처 월 10만 원 지원. 컵라면이 아니라 제대로 된 한 끼를 먹을 권리를 보장해주세요.' },
+              { num: '02', title: '청년 주거비 상한제 및 지원금 증액', detail: '대학가 원룸 월세 상한제 도입. 월세 지원금을 현재 20만 원에서 35만 원으로 확대해주세요.' },
+              { num: '03', title: '청년 사회적 고립 방지 예산 확보', detail: '무료 청년 커뮤니티 공간, 문화바우처 확대. 돈 없어서 친구를 못 만나는 일이 없도록 해주세요.' },
             ].map((p, i) => (
               <div key={i} style={{ background: 'white', borderRadius: 16, padding: '16px 18px', marginBottom: 10, boxShadow: '0 4px 14px rgba(0,0,0,.08)', borderLeft: `5px solid ${AMBER}`, display: 'flex', gap: 14, alignItems: 'flex-start' }}>
                 <span style={{ fontWeight: 700, fontSize: 24, color: AMBER, flexShrink: 0, lineHeight: 1 }}>{p.num}</span>
