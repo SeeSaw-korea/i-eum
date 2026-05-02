@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface Option { label: string; text: string; type: 1 | 2 | 3; }
 interface Question { text: string; scene: string; options: Option[]; }
@@ -136,6 +136,24 @@ const MID = '#6B4A20';
 
 const TypeTest: React.FC = () => {
   const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
+
+  // URL sync for GA4 drop-off tracking
+  useEffect(() => {
+    if (screen === 'intro') {
+      setSearchParams({}, { replace: true });
+    } else if (screen === 'quiz') {
+      setSearchParams({ q: String(currentQ + 1) }, { replace: true });
+    } else if (screen === 'landing') {
+      setSearchParams({ step: 'landing' }, { replace: true });
+    }
+  }, [screen, currentQ]);
+
+  useEffect(() => {
+    if (showResult) {
+      setSearchParams({ step: 'result' }, { replace: true });
+    }
+  }, [showResult]);
   const [screen, setScreen] = useState<'intro' | 'quiz' | 'landing'>('intro');
   const [showResult, setShowResult] = useState(false);
   const [currentQ, setCurrentQ] = useState(0);
@@ -273,7 +291,7 @@ const TypeTest: React.FC = () => {
               </div>
               <div style={{ width: 120, height: 14, background: 'rgba(90,60,20,.18)', borderRadius: '50%', margin: '0 auto 18px', animation: 'shadowPulse 3.5s ease-in-out infinite' }} />
               <h1 style={{ fontWeight: 700, fontSize: 30, color: DARK, lineHeight: 1.3, textAlign: 'center', marginBottom: 8, zIndex: 2, position: 'relative' }}>
-                나는 대학생인가,<br /><span style={{ color: AMBER }}>알바이버 전문가</span>인가?
+                나는 대학생인가,<br /><span style={{ color: AMBER }}>서바이벌 전문가</span>인가?
               </h1>
               <p style={{ fontSize: 14, color: MID, textAlign: 'center', lineHeight: 1.7, marginBottom: 20, zIndex: 2, fontWeight: 500 }}>
                 2026 자취생 생존 난이도 테스트<br />7가지 질문으로 내 생존 등급을 확인해보세요
