@@ -143,7 +143,7 @@ const TypeTest: React.FC = () => {
   const [answers, setAnswers] = useState<number[]>([]);
   const [typeCounts, setTypeCounts] = useState<Record<number, number>>({ 1: 0, 2: 0, 3: 0 });
   const [currentResult, setCurrentResult] = useState<ResultData | null>(null);
-  const [formData, setFormData] = useState({ name: '', phone: '', region: '', status: '', worry: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '', region: '', regionDetail: '', status: '', worry: '' });
   const [submitted, setSubmitted] = useState(false);
   const [liveCount, setLiveCount] = useState(147);
   const [statCount, setStatCount] = useState(12847);
@@ -219,6 +219,7 @@ const TypeTest: React.FC = () => {
         name: formData.name,
         phone: formData.phone,
         region: formData.region,
+        region_detail: formData.regionDetail || null,
         status: formData.status || null,
         worry: formData.worry || null,
         result: resultLabel,
@@ -530,6 +531,14 @@ const TypeTest: React.FC = () => {
                     <option value="">거주 지역을 선택해주세요</option>
                     {['서울', '경기', '인천', '부산', '대구', '광주', '대전', '기타 지역'].map(r => <option key={r}>{r}</option>)}
                   </select>
+                  <input
+                    type="text"
+                    value={formData.regionDetail}
+                    onChange={e => setFormData(prev => ({ ...prev, regionDetail: e.target.value }))}
+                    placeholder="예) 서울 관악구 신림동, 경기 수원시 등"
+                    style={{ width: '100%', border: `2px solid ${WARM}`, borderRadius: 12, padding: '13px 15px', fontSize: 14, color: '#2C2C2C', background: '#FFFAF3', outline: 'none', boxSizing: 'border-box', fontFamily: "'Noto Sans KR',sans-serif", marginTop: 8 }}
+                  />
+                  <div style={{ fontSize: 11, color: '#aaa', marginTop: 4, paddingLeft: 2 }}>구/동까지 적어주시면 더 좋아요 (선택)</div>
                 </div>
                 <div style={{ marginBottom: 14 }}>
                   <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: MID, marginBottom: 6 }}>신분</label>
