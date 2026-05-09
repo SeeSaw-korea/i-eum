@@ -22,6 +22,21 @@ const ContentDetail: React.FC<ContentDetailProps> = ({
     window.scrollTo(0, 0);
   }, []);
 
+  // Helper to generate consistent random numbers based on item id
+  const generateConsistentRandom = (id: string, min: number, max: number) => {
+    let hash = 0;
+    for (let i = 0; i < id.length; i++) {
+      hash = id.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const random = Math.abs(Math.sin(hash));
+    return Math.floor(random * (max - min + 1)) + min;
+  };
+
+  const viewCount = generateConsistentRandom(item.id, 200, 3500);
+  const heartCountBase = generateConsistentRandom(item.id, 10, 150);
+  const heartCount = isWishlisted ? heartCountBase + 1 : heartCountBase;
+  const viewCountStr = viewCount > 1000 ? `${(viewCount / 1000).toFixed(1)}K+` : `${viewCount}`;
+
   return (
     <div className="min-h-screen bg-ieumCream pb-28 pt-[60px]">
       {/* Sleek Header - Changed to fixed for flawless layout without overlap */}
@@ -91,7 +106,7 @@ const ContentDetail: React.FC<ContentDetailProps> = ({
            </div>
            <div className="flex flex-col">
              <span className="text-[10px] text-gray-400 font-bold mb-0.5">조회수</span>
-             <span className="text-xs font-black text-gray-800">1.2K+</span>
+             <span className="text-xs font-black text-gray-800">{viewCountStr}</span>
            </div>
         </div>
         <button 
@@ -350,7 +365,7 @@ const ContentDetail: React.FC<ContentDetailProps> = ({
           className={`flex flex-col items-center justify-center w-[54px] h-[54px] ${isWishlisted ? 'bg-red-50 border-red-200' : 'bg-white border-gray-300'} border shadow-sm rounded-xl transition-colors`}
         >
           <i className={`${isWishlisted ? 'fa-solid text-red-500' : 'fa-regular text-gray-500'} fa-heart text-xl`}></i>
-          <span className={`text-[10px] font-bold mt-1 ${isWishlisted ? 'text-red-500' : 'text-gray-500'}`}>99+</span>
+          <span className={`text-[10px] font-bold mt-1 ${isWishlisted ? 'text-red-500' : 'text-gray-500'}`}>{heartCount}</span>
         </button>
         {item.category === Category.INTERVIEWS ? (
           <button
