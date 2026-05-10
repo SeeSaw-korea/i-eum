@@ -149,8 +149,46 @@ const CategoryDetail: React.FC<CategoryDetailProps> = ({
 
   const isProgram = meta.type === 'program';
 
+  const PROGRAM_TABS = [
+    { label: '프로젝트', path: `/category/${Category.PROJECTS}` },
+    { label: '세미나',   path: `/category/${Category.SEMINARS}` },
+    { label: '캠페인',   path: `/category/${Category.CAMPAIGNS}` },
+  ];
+  const NEWS_TABS = [
+    { label: '인터뷰',      path: `/category/${Category.INTERVIEWS}` },
+    { label: '에세이/칼럼', path: `/category/${Category.ESSAYS}` },
+    { label: '인사이트',    path: `/category/${Category.INSIGHTS}` },
+  ];
+  const subTabs = isProgram ? PROGRAM_TABS : NEWS_TABS;
+  const currentLabel = subTabs.find(t => t.path === `/category/${category}`)?.label ?? '';
+
   return (
     <div className="min-h-screen bg-[#F4F4F6] animate-fadeIn">
+
+      {/* ── 카테고리 서브 탭바 ── */}
+      <div className="bg-white border-b border-ieumBorder sticky top-16 z-50 shadow-sm">
+        <div className="max-w-5xl mx-auto px-5 flex items-center gap-1">
+          <span className="text-[11px] font-bold text-ieumMuted mr-3 hidden md:block">
+            {isProgram ? '프로그램' : '소식'}
+          </span>
+          {subTabs.map((tab) => (
+            <button
+              key={tab.label}
+              onClick={() => navigate(tab.path)}
+              className={`relative px-4 py-3.5 text-sm font-bold transition-colors whitespace-nowrap ${
+                tab.label === currentLabel
+                  ? 'text-ieumOrange'
+                  : 'text-ieumMuted hover:text-ieumNavy'
+              }`}
+            >
+              {tab.label}
+              {tab.label === currentLabel && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-ieumOrange rounded-full" />
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* ── 히어로 ── */}
       <div className={`${meta.color} relative overflow-hidden`}>
@@ -191,7 +229,7 @@ const CategoryDetail: React.FC<CategoryDetailProps> = ({
       </div>
 
       {/* ── 필터 바 ── */}
-      <div className="bg-white border-b border-gray-200 sticky top-16 z-40 shadow-sm">
+      <div className="bg-white border-b border-gray-200 sticky top-[104px] z-40 shadow-sm">
         <div className="max-w-5xl mx-auto px-5 py-3 flex items-center gap-3">
           <div className="flex overflow-x-auto gap-2 pb-0.5 hide-scrollbar flex-1">
             {meta.pills.map((sub, idx) => (
