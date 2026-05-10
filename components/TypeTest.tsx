@@ -135,7 +135,9 @@ const WARM = '#E8E2D2';
 const DARK = '#2C1A08';
 const MID = '#5A4A38';
 
-const TypeTest: React.FC = () => {
+interface TypeTestProps { variant?: 'A' | 'B'; }
+
+const TypeTest: React.FC<TypeTestProps> = ({ variant = 'A' }) => {
   const navigate = useNavigate();
   const [screen, setScreen] = useState<'intro' | 'quiz' | 'landing'>('intro');
   const [showResult, setShowResult] = useState(false);
@@ -226,6 +228,7 @@ const TypeTest: React.FC = () => {
         status: formData.status,
         worry: formData.worry,
         result: resultLabel,
+        variant,
       });
     } catch (_) { /* fail silently */ }
     setSignCount(prev => prev + 1);
