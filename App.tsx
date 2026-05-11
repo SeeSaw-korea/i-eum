@@ -17,6 +17,7 @@ import ProjectLetter2 from './components/ProjectLetter2';
 import ProjectTest from './components/ProjectTest';
 import ProjectRandomBox from './components/ProjectRandomBox';
 import TypeTest from './components/TypeTest';
+import TypeTest625 from './components/TypeTest625';
 import ProjectMinwon from './components/ProjectMinwon';
 import AboutPage from './components/AboutPage';
 
@@ -169,6 +170,9 @@ const App: React.FC = () => {
     location.pathname === '/type-test' ||
     location.pathname === '/type-test-a' ||
     location.pathname === '/type-test-b' ||
+    location.pathname === '/625-test' ||
+    location.pathname === '/625-test-a' ||
+    location.pathname === '/625-test-b' ||
     location.pathname.startsWith('/project-minwon') ||
     location.pathname === '/login' ||
     location.pathname === '/signup';
@@ -306,6 +310,9 @@ const App: React.FC = () => {
           <Route path="/type-test" element={<TypeTest variant="A" />} />
           <Route path="/type-test-a" element={<TypeTest variant="A" />} />
           <Route path="/type-test-b" element={<TypeTest variant="B" />} />
+          <Route path="/625-test" element={<TypeTest625 variant="A" />} />
+          <Route path="/625-test-a" element={<TypeTest625 variant="A" />} />
+          <Route path="/625-test-b" element={<TypeTest625 variant="B" />} />
           <Route path="/project-minwon" element={<ProjectMinwonWrapper />} />
           <Route path="/more" element={<MorePage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
