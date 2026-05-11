@@ -220,7 +220,7 @@ const TypeTest: React.FC<TypeTestProps> = ({ variant = 'A' }) => {
     if (!formData.worry) { alert('정부에 한마디를 입력해주세요.'); return; }
     const resultLabel = currentResult ? `${currentResult.badge} ${currentResult.title}` : '';
     try {
-      await supabase.from('type_test_submissions').insert({
+      await supabase.from('AD-ieum-survival').insert({
         name: formData.name,
         phone: formData.phone,
         region: formData.region,

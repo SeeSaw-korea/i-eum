@@ -7,7 +7,7 @@ const CategoryList: React.FC = () => {
 
   const handleClick = (cat: string) => {
     if (cat === Category.TYPE_TEST) {
-      navigate('/type-test');
+      navigate('/survival-a');
     } else {
       navigate(`/category/${CATEGORY_SLUG[cat as Category]}`);
     }

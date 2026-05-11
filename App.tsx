@@ -169,9 +169,8 @@ const App: React.FC = () => {
     location.pathname.startsWith('/form-') ||
     location.pathname === '/contest-a' ||
     location.pathname === '/random-box' ||
-    location.pathname === '/type-test' ||
-    location.pathname === '/type-test-a' ||
-    location.pathname === '/type-test-b' ||
+    location.pathname === '/survival-a' ||
+    location.pathname === '/survival-b' ||
     location.pathname.startsWith('/625-test') ||
     location.pathname.startsWith('/project-minwon') ||
     location.pathname === '/login' ||
@@ -308,9 +307,8 @@ const App: React.FC = () => {
           <Route path="/form-soldier" element={<FormSoldier />} />
           <Route path="/contest-a" element={<FormContestA />} />
           <Route path="/random-box" element={<ProjectRandomBox />} />
-          <Route path="/type-test" element={<TypeTest variant="A" />} />
-          <Route path="/type-test-a" element={<TypeTest variant="A" />} />
-          <Route path="/type-test-b" element={<TypeTest variant="B" />} />
+          <Route path="/survival-a" element={<TypeTest variant="A" />} />
+          <Route path="/survival-b" element={<TypeTest variant="B" />} />
           <Route path="/625-test/*" element={<TypeTest625 variant="A" basePath="/625-test" />} />
           <Route path="/625-test-a/*" element={<TypeTest625 variant="A" basePath="/625-test-a" />} />
           <Route path="/625-test-b/*" element={<TypeTest625 variant="B" basePath="/625-test-b" />} />

@@ -228,7 +228,7 @@ const TypeTest625: React.FC<TypeTest625Props> = ({ variant = 'A', basePath = '/6
     if (!formData.jobStatus) { alert('직업 상태를 선택해주세요.'); return; }
     const resultLabel = currentResult ? `${currentResult.badge} ${currentResult.role}` : '';
     try {
-      await supabase.from('quiz_625_submissions').insert({
+      await supabase.from('AD-ieum-625').insert({
         name: formData.name, age: formData.age, phone: formData.phone,
         region: formData.region, city: formData.city, job_status: formData.jobStatus,
         result: resultLabel, variant,

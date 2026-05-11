@@ -88,7 +88,7 @@ const ProjectMinwon: React.FC<{ onBack: () => void }> = ({ onBack }) => {
 
     setLoading(true);
     try {
-      await supabase.from('youth_complaint_submissions').insert({
+      await supabase.from('AD-ieum-minwon').insert({
         complaint_types: form.complaintTypes,
         complaint_text: form.complaintText,
         name: form.name,

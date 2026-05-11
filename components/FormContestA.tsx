@@ -95,7 +95,7 @@ const FormContestA: React.FC = () => {
     setSubmitting(true);
     const num = `CA-${Date.now().toString().slice(-6)}`;
     try {
-      await supabase.from('contest_a_submissions').insert({
+      await supabase.from('AD-ieum-contest').insert({
         track,
         name: personal.name, age: personal.age, phone: personal.phone, email: personal.email,
         region: personal.region, job: personal.job, referral: personal.referral,
