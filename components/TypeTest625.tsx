@@ -443,6 +443,7 @@ const TypeTest625: React.FC<TypeTest625Props> = ({ variant = 'A', basePath = '/6
             </div>
 
             {/* landing images */}
+            <img src={`${BASE}landing01.jpg`} alt="" style={{ width:'100%', borderRadius:12, marginBottom:10, display:'block' }} onError={(e)=>{(e.target as HTMLImageElement).style.display='none';}} />
             <img src={`${BASE}landing02.jpg`} alt="" style={{ width:'100%', borderRadius:12, marginBottom:10, display:'block' }} onError={(e)=>{(e.target as HTMLImageElement).style.display='none';}} />
             <img src={`${BASE}landing03.jpg`} alt="" style={{ width:'100%', borderRadius:12, marginBottom:10, display:'block' }} onError={(e)=>{(e.target as HTMLImageElement).style.display='none';}} />
             <img src={`${BASE}landing04.jpg`} alt="" style={{ width:'100%', borderRadius:12, marginBottom:10, display:'block' }} onError={(e)=>{(e.target as HTMLImageElement).style.display='none';}} />
