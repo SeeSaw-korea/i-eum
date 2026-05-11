@@ -1,4 +1,6 @@
 
+declare global { interface Window { gtag?: (...args: unknown[]) => void; } }
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { Category, UserProfile, AppState } from './types';
@@ -133,6 +135,15 @@ const App: React.FC = () => {
   useEffect(() => {
     setMobileMenuOpen(false);
     setMobileOpenGroup(null);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'page_view', {
+        page_path: location.pathname,
+        page_location: window.location.href,
+      });
+    }
   }, [location.pathname]);
 
   const handleOnboardingComplete = (profile: UserProfile) => {
