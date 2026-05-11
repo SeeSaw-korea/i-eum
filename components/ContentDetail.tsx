@@ -403,7 +403,11 @@ const ContentDetail: React.FC<ContentDetailProps> = ({
           <button
             onClick={() => {
               if (item.externalLink) {
-                window.open(item.externalLink, '_blank');
+                if (item.externalLink.startsWith('/')) {
+                  navigate(item.externalLink);
+                } else {
+                  window.open(item.externalLink, '_blank');
+                }
               } else {
                 alert('해당 캠페인 채팅방으로 이동합니다.');
               }

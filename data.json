@@ -78,7 +78,7 @@
       "category": "프로젝트",
       "description": "장애와 비장애인이 함께 만드는 미래, 사회적 밸런스를 실현하는 아이디어를 제안하는 공모전입니다. (분야: 기술 / 문화 / 교육)",
       "imageUrl": "/image/contest-card.png",
-      "deadline": "진행완료",
+      "deadline": "5/1~5/18",
       "tag": "공모전",
       "detailedSections": [
         {
@@ -100,7 +100,7 @@
           "iconClass": "fa-solid fa-user-check text-blue-500",
           "extraData": [
             "지원 자격: 서울 및 고양시 거주 20대 청년 (개인 또는 팀 참여 가능)",
-            "모집 기간: 2026년 3월 1일(화) ~ 4월 24일(금)",
+            "모집 기간: 2026년 5월 1일(목) ~ 5월 18일(일)",
             "지원 방법: 공식 홈페이지 접속 후 아이디어 직접 입력 및 제출"
           ]
         },
@@ -138,7 +138,7 @@
           ]
         }
       ],
-      "externalLink": "https://ieum-society.org/contestB"
+      "externalLink": "/contest-a"
     },
     {
       "id": "p2",
