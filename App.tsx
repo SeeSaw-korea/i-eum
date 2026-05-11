@@ -12,6 +12,7 @@ import SearchPage from './components/SearchPage';
 import { useContentById } from './hooks/useContents';
 import FormIndependence from './components/FormIndependence';
 import FormSoldier from './components/FormSoldier';
+import FormContestA from './components/FormContestA';
 import ProjectLetter1 from './components/ProjectLetter1';
 import ProjectLetter2 from './components/ProjectLetter2';
 import ProjectTest from './components/ProjectTest';
@@ -166,6 +167,7 @@ const App: React.FC = () => {
     location.pathname.startsWith('/search') ||
     location.pathname.startsWith('/content') ||
     location.pathname.startsWith('/form-') ||
+    location.pathname === '/contest-a' ||
     location.pathname === '/random-box' ||
     location.pathname === '/type-test' ||
     location.pathname === '/type-test-a' ||
@@ -304,6 +306,7 @@ const App: React.FC = () => {
           <Route path="/search" element={<SearchPage onBack={() => navigate(-1)} onItemClick={(item) => navigate(`/content/${item.id}`)} />} />
           <Route path="/form-independence" element={<FormIndependence />} />
           <Route path="/form-soldier" element={<FormSoldier />} />
+          <Route path="/contest-a" element={<FormContestA />} />
           <Route path="/random-box" element={<ProjectRandomBox />} />
           <Route path="/type-test" element={<TypeTest variant="A" />} />
           <Route path="/type-test-a" element={<TypeTest variant="A" />} />
