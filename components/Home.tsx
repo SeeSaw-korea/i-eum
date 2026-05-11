@@ -185,13 +185,6 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
 
               <div className="flex flex-wrap gap-3 mb-10">
                 <button
-                  onClick={() => navigate('/category')}
-                  className="bg-ieumOrange text-white font-bold px-7 py-3.5 rounded-2xl text-sm hover:bg-ieumGold transition-all"
-                  style={{boxShadow:'0 8px 24px rgba(255,107,0,0.35)'}}
-                >
-                  활동 둘러보기 <i className="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
-                </button>
-                <button
                   onClick={() => navigate('/more')}
                   className="border border-white/20 text-white/70 font-semibold px-7 py-3.5 rounded-2xl text-sm hover:bg-white/10 transition-all"
                 >
@@ -306,7 +299,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
                 청년을<br />세우는<br />이음
               </h2>
               <button
-                onClick={() => navigate('/more')}
+                onClick={() => navigate('/about/greeting')}
                 className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-ieumOrange hover:gap-3 transition-all"
               >
                 자세히 알아보기 <i className="fa-solid fa-arrow-right text-xs"></i>
