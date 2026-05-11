@@ -9,6 +9,26 @@ export enum Category {
   TYPE_TEST = '유형테스트'
 }
 
+export const CATEGORY_SLUG: Record<Category, string> = {
+  [Category.PROJECTS]:   'projects',
+  [Category.SEMINARS]:   'seminars',
+  [Category.INSIGHTS]:   'insights',
+  [Category.CAMPAIGNS]:  'campaigns',
+  [Category.INTERVIEWS]: 'interviews',
+  [Category.ESSAYS]:     'essays',
+  [Category.TYPE_TEST]:  'type-test',
+};
+
+export const SLUG_TO_CATEGORY: Record<string, Category> = {
+  projects:   Category.PROJECTS,
+  seminars:   Category.SEMINARS,
+  insights:   Category.INSIGHTS,
+  campaigns:  Category.CAMPAIGNS,
+  interviews: Category.INTERVIEWS,
+  essays:     Category.ESSAYS,
+  'type-test':Category.TYPE_TEST,
+};
+
 export interface UserProfile {
   age: number;
   region: string;

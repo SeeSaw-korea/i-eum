@@ -35,17 +35,17 @@ const NAV_ITEMS = [
   {
     label: '프로그램',
     children: [
-      { label: '프로젝트', path: `/category/${Category.PROJECTS}` },
-      { label: '세미나', path: `/category/${Category.SEMINARS}` },
-      { label: '캠페인', path: `/category/${Category.CAMPAIGNS}` },
+      { label: '프로젝트', path: '/category/projects' },
+      { label: '세미나', path: '/category/seminars' },
+      { label: '캠페인', path: '/category/campaigns' },
     ],
   },
   {
     label: '소식',
     children: [
-      { label: '인터뷰', path: `/category/${Category.INTERVIEWS}` },
-      { label: '에세이/칼럼', path: `/category/${Category.ESSAYS}` },
-      { label: '인사이트', path: `/category/${Category.INSIGHTS}` },
+      { label: '인터뷰', path: '/category/interviews' },
+      { label: '에세이/칼럼', path: '/category/essays' },
+      { label: '인사이트', path: '/category/insights' },
     ],
   },
 ];
@@ -209,7 +209,7 @@ const App: React.FC = () => {
                 <i className="fa-solid fa-magnifying-glass text-ieumDark text-sm"></i>
               </button>
               <button
-                onClick={() => navigate(`/category/${Category.PROJECTS}`)}
+                onClick={() => navigate('/category/projects')}
                 className="bg-ieumOrange text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-ieumGold transition-colors"
               >
                 활동 참여하기
@@ -273,7 +273,7 @@ const App: React.FC = () => {
               ))}
               <div className="px-5 py-4">
                 <button
-                  onClick={() => navigate(`/category/${Category.PROJECTS}`)}
+                  onClick={() => navigate('/category/projects')}
                   className="w-full bg-ieumOrange text-white text-sm font-bold py-3 rounded-xl"
                 >
                   활동 참여하기

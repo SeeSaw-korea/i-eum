@@ -369,7 +369,7 @@ const ContentDetail: React.FC<ContentDetailProps> = ({
         </button>
         {item.category === Category.INTERVIEWS ? (
           <button
-            onClick={() => navigate(`/category/${Category.INTERVIEWS}`)}
+            onClick={() => navigate('/category/interviews')}
             className="flex-1 bg-gradient-to-r from-ieumAmber to-ieumGold hover:opacity-90 text-white font-black text-base h-[54px] rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-ieumAmber/30 active:scale-[0.98] transition-all"
           >
             <i className="fa-solid fa-book-open text-[14px]"></i>
@@ -377,7 +377,7 @@ const ContentDetail: React.FC<ContentDetailProps> = ({
           </button>
         ) : item.category === Category.INSIGHTS ? (
           <button
-            onClick={() => navigate(`/category/${Category.INSIGHTS}`)}
+            onClick={() => navigate('/category/insights')}
             className="flex-1 bg-gradient-to-r from-ieumAmber to-ieumGold hover:opacity-90 text-white font-black text-base h-[54px] rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-ieumAmber/30 active:scale-[0.98] transition-all"
           >
             <i className="fa-solid fa-lightbulb text-[14px]"></i>
@@ -385,7 +385,7 @@ const ContentDetail: React.FC<ContentDetailProps> = ({
           </button>
         ) : item.category === Category.ESSAYS ? (
           <button
-            onClick={() => navigate(`/category/${Category.ESSAYS}`)}
+            onClick={() => navigate('/category/essays')}
             className="flex-1 bg-gradient-to-r from-ieumAmber to-ieumGold hover:opacity-90 text-white font-black text-base h-[54px] rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-ieumAmber/30 active:scale-[0.98] transition-all"
           >
             <i className="fa-solid fa-pen-nib text-[14px]"></i>

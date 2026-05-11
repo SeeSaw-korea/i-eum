@@ -259,19 +259,19 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
               {
                 icon: 'fa-puzzle-piece', label: '프로젝트', tag: 'Program',
                 desc: '청년이 기획하고 실행하는 사회참여 프로젝트',
-                path: `/category/${Category.PROJECTS}`,
+                path: '/category/projects',
                 bg: 'bg-ieumNavy',
               },
               {
                 icon: 'fa-bullhorn', label: '캠페인', tag: 'Action',
                 desc: '일상 속 작은 실천으로 만드는 사회적 변화',
-                path: `/category/${Category.CAMPAIGNS}`,
+                path: '/category/campaigns',
                 bg: 'bg-ieumOrange',
               },
               {
                 icon: 'fa-microphone', label: '인터뷰', tag: 'Story',
                 desc: '우리 주변 평범한 청년들의 이야기를 듣다',
-                path: `/category/${Category.INTERVIEWS}`,
+                path: '/category/interviews',
                 bg: 'bg-ieumNavyLight',
               },
             ].map((act, idx) => (
@@ -372,7 +372,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
               <p className="text-sm text-ieumMuted mt-1">청년이 직접 기획하고 실행하는 활동들</p>
             </div>
             <button
-              onClick={() => navigate(`/category/${Category.PROJECTS}`)}
+              onClick={() => navigate('/category/projects')}
               className="hidden md:flex items-center gap-1.5 text-sm font-bold text-ieumOrange hover:gap-2.5 transition-all flex-shrink-0"
             >
               전체보기 <i className="fa-solid fa-arrow-right text-xs"></i>
@@ -448,7 +448,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
             ))}
           </div>
           <button
-            onClick={() => navigate(`/category/${Category.PROJECTS}`)}
+            onClick={() => navigate('/category/projects')}
             className="md:hidden mt-4 w-full border border-ieumBorder text-ieumDark text-sm font-bold py-3 rounded-2xl hover:border-ieumOrange hover:text-ieumOrange transition-colors"
           >
             전체 프로젝트 보기
@@ -532,7 +532,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
               <p className="text-sm text-ieumMuted mt-1">함께 배우고 나누는 지식의 장</p>
             </div>
             <button
-              onClick={() => navigate(`/category/${Category.SEMINARS}`)}
+              onClick={() => navigate('/category/seminars')}
               className="hidden md:flex items-center gap-1.5 text-sm font-bold text-ieumOrange hover:gap-2.5 transition-all flex-shrink-0"
             >
               전체보기 <i className="fa-solid fa-arrow-right text-xs"></i>
@@ -593,7 +593,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
                 작지만 확실한 방식의 행동으로 번역합니다.
               </p>
               <button
-                onClick={() => navigate(`/category/${Category.CAMPAIGNS}`)}
+                onClick={() => navigate('/category/campaigns')}
                 className="text-sm font-bold text-ieumOrange flex items-center gap-1.5 hover:gap-2.5 transition-all"
               >
                 캠페인 전체보기 <i className="fa-solid fa-arrow-right text-xs"></i>
@@ -639,7 +639,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
                   <h3 className="text-xl font-black text-ieumDark mt-1">우리의 이야기, 인터뷰</h3>
                 </div>
                 <button
-                  onClick={() => navigate(`/category/${Category.INTERVIEWS}`)}
+                  onClick={() => navigate('/category/interviews')}
                   className="text-xs text-ieumMuted font-semibold flex items-center gap-1"
                 >
                   전체보기 <i className="fa-solid fa-chevron-right text-[10px]"></i>
@@ -675,7 +675,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
                   <h3 className="text-xl font-black text-ieumDark mt-1">매월 청년 사회 인사이트</h3>
                 </div>
                 <button
-                  onClick={() => navigate(`/category/${Category.INSIGHTS}`)}
+                  onClick={() => navigate('/category/insights')}
                   className="text-xs text-ieumMuted font-semibold flex items-center gap-1"
                 >
                   전체보기 <i className="fa-solid fa-chevron-right text-[10px]"></i>
@@ -758,10 +758,10 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
                 <p className="text-white text-xs font-bold mb-3">활동</p>
                 <div className="flex flex-col gap-2">
                   {[
-                    ['프로젝트', `/category/${Category.PROJECTS}`],
-                    ['세미나', `/category/${Category.SEMINARS}`],
-                    ['캠페인', `/category/${Category.CAMPAIGNS}`],
-                    ['인터뷰', `/category/${Category.INTERVIEWS}`],
+                    ['프로젝트', '/category/projects'],
+                    ['세미나', '/category/seminars'],
+                    ['캠페인', '/category/campaigns'],
+                    ['인터뷰', '/category/interviews'],
                   ].map(([label, path]) => (
                     <button
                       key={path}
@@ -776,7 +776,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
               <div>
                 <p className="text-white text-xs font-bold mb-3">이음</p>
                 <div className="flex flex-col gap-2">
-                  {[['소개', '/more'], ['인사이트', `/category/${Category.INSIGHTS}`]].map(([label, path]) => (
+                  {[['소개', '/more'], ['인사이트', '/category/insights']].map(([label, path]) => (
                     <button
                       key={path}
                       onClick={() => navigate(path)}

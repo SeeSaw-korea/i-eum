@@ -1,5 +1,5 @@
 import React from 'react';
-import { Category } from '../types';
+import { Category, CATEGORY_SLUG } from '../types';
 import { useNavigate } from 'react-router-dom';
 
 const CategoryList: React.FC = () => {
@@ -9,7 +9,7 @@ const CategoryList: React.FC = () => {
     if (cat === Category.TYPE_TEST) {
       navigate('/type-test');
     } else {
-      navigate(`/category/${cat}`);
+      navigate(`/category/${CATEGORY_SLUG[cat as Category]}`);
     }
   };
 

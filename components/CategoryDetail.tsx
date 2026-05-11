@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Category, ContentItem } from '../types';
+import { Category, ContentItem, SLUG_TO_CATEGORY, CATEGORY_SLUG } from '../types';
 import { useContentsByCategory } from '../hooks/useContents';
 import { getImageUrl } from '../lib/imageUrl';
 
@@ -94,7 +94,7 @@ const CategoryDetail: React.FC<CategoryDetailProps> = ({
   const params = useParams();
   const rawId = params['*'] ?? '';
   const navigate = useNavigate();
-  const category = rawId as Category;
+  const category = SLUG_TO_CATEGORY[rawId] ?? (rawId as Category);
 
   const { contents, loading, error } = useContentsByCategory(category);
   const [activeSubCategory, setActiveSubCategory] = useState('전체');
@@ -150,17 +150,17 @@ const CategoryDetail: React.FC<CategoryDetailProps> = ({
   const isProgram = meta.type === 'program';
 
   const PROGRAM_TABS = [
-    { label: '프로젝트', path: `/category/${Category.PROJECTS}` },
-    { label: '세미나',   path: `/category/${Category.SEMINARS}` },
-    { label: '캠페인',   path: `/category/${Category.CAMPAIGNS}` },
+    { label: '프로젝트', path: '/category/projects' },
+    { label: '세미나',   path: '/category/seminars' },
+    { label: '캠페인',   path: '/category/campaigns' },
   ];
   const NEWS_TABS = [
-    { label: '인터뷰',      path: `/category/${Category.INTERVIEWS}` },
-    { label: '에세이/칼럼', path: `/category/${Category.ESSAYS}` },
-    { label: '인사이트',    path: `/category/${Category.INSIGHTS}` },
+    { label: '인터뷰',      path: '/category/interviews' },
+    { label: '에세이/칼럼', path: '/category/essays' },
+    { label: '인사이트',    path: '/category/insights' },
   ];
   const subTabs = isProgram ? PROGRAM_TABS : NEWS_TABS;
-  const currentLabel = subTabs.find(t => t.path === `/category/${category}`)?.label ?? '';
+  const currentLabel = subTabs.find(t => t.path === `/category/${CATEGORY_SLUG[category]}`)?.label ?? '';
 
   return (
     <div className="min-h-screen bg-[#F4F4F6] animate-fadeIn">
