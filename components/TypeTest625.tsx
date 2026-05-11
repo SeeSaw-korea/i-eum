@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
 type ResultType = 'A' | 'B' | 'C' | 'D' | 'E';
@@ -165,13 +165,16 @@ const LIGHT = '#FAF7F2';
 const WARM = '#DDD3C0';
 const NAVY = '#1A2B3C';
 
-interface TypeTest625Props { variant?: 'A' | 'B'; }
+interface TypeTest625Props { variant?: 'A' | 'B'; basePath?: string; }
 
-const TypeTest625: React.FC<TypeTest625Props> = ({ variant = 'A' }) => {
+const TypeTest625: React.FC<TypeTest625Props> = ({ variant = 'A', basePath = '/625-test' }) => {
   const navigate = useNavigate();
-  const [screen, setScreen] = useState<'intro' | 'quiz' | 'landing'>('intro');
+  const location = useLocation();
+  const subPath = location.pathname.slice(basePath.length).replace(/^\//, '');
+  const qMatch = subPath.match(/^q(\d+)$/);
+  const currentQ = qMatch ? parseInt(qMatch[1]) - 1 : 0;
+  const screen: 'intro' | 'quiz' | 'landing' = qMatch ? 'quiz' : subPath === 'landing' ? 'landing' : 'intro';
   const [showResult, setShowResult] = useState(false);
-  const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
   const [typeCounts, setTypeCounts] = useState<Record<ResultType, number>>({ A: 0, B: 0, C: 0, D: 0, E: 0 });
   const [currentResult, setCurrentResult] = useState<ResultData | null>(null);
@@ -202,7 +205,7 @@ const TypeTest625: React.FC<TypeTest625Props> = ({ variant = 'A' }) => {
     setTypeCounts(newCounts);
     setTimeout(() => {
       if (currentQ < questions.length - 1) {
-        setCurrentQ(p => p + 1);
+        navigate(`${basePath}/q${currentQ + 2}`);
         window.scrollTo(0, 0);
       } else {
         let maxType: ResultType = 'A', maxVal = 0;
@@ -210,7 +213,7 @@ const TypeTest625: React.FC<TypeTest625Props> = ({ variant = 'A' }) => {
           if (newCounts[t] > maxVal) { maxVal = newCounts[t]; maxType = t; }
         });
         setCurrentResult(results[maxType]);
-        setScreen('landing');
+        navigate(`${basePath}/landing`);
         window.scrollTo(0, 0);
       }
     }, 380);
@@ -245,9 +248,10 @@ const TypeTest625: React.FC<TypeTest625Props> = ({ variant = 'A' }) => {
   };
 
   const restartTest = () => {
-    setScreen('intro'); setCurrentQ(0); setAnswers([]);
+    setAnswers([]);
     setTypeCounts({ A: 0, B: 0, C: 0, D: 0, E: 0 });
     setCurrentResult(null); setSubmitted(false); setShowResult(false);
+    navigate(basePath);
     window.scrollTo(0, 0);
   };
 
@@ -282,13 +286,7 @@ const TypeTest625: React.FC<TypeTest625Props> = ({ variant = 'A' }) => {
         {/* ============ INTRO ============ */}
         {screen === 'intro' && (
           <div className="q625-page">
-            {/* hero image */}
-            <div style={{ position:'relative', overflow:'hidden' }}>
-              <img src={`${BASE}landing01.jpg`} alt="625" style={{ width:'100%', display:'block', maxHeight:520, objectFit:'cover' }} />
-              <div style={{ position:'absolute', bottom:0, left:0, right:0, height:80, background:`linear-gradient(transparent,${CREAM})` }} />
-            </div>
-
-            <div style={{ padding:'0 20px 32px' }}>
+            <div style={{ padding:'48px 20px 32px' }}>
               {/* live badge */}
               <div style={{ display:'flex', alignItems:'center', gap:6, background:'white', border:`2px solid ${RED}`, color:DARK, fontSize:12, fontWeight:700, padding:'6px 14px', borderRadius:30, marginBottom:16, boxShadow:'0 2px 12px rgba(139,26,26,.15)', width:'fit-content' }}>
                 <div style={{ width:7, height:7, borderRadius:'50%', background:RED, animation:'pulse625 1.5s ease-in-out infinite' }} />
@@ -348,7 +346,7 @@ const TypeTest625: React.FC<TypeTest625Props> = ({ variant = 'A' }) => {
               </div>
 
               <button
-                onClick={() => { setScreen('quiz'); window.scrollTo(0,0); }}
+                onClick={() => { navigate(`${basePath}/q1`); window.scrollTo(0,0); }}
                 style={{ width:'100%', background:`linear-gradient(135deg,${RED},#A02020)`, color:'white', border:'none', borderRadius:18, padding:'20px 24px', fontSize:17, fontWeight:700, cursor:'pointer', boxShadow:`0 8px 24px rgba(139,26,26,.35)`, display:'flex', alignItems:'center', justifyContent:'center', gap:10 }}
               >
                 <span>지금 내 역할 확인하기</span>
@@ -424,7 +422,7 @@ const TypeTest625: React.FC<TypeTest625Props> = ({ variant = 'A' }) => {
 
             {currentQ > 0 && (
               <div style={{ textAlign:'center' }}>
-                <button onClick={() => { setCurrentQ(p=>p-1); window.scrollTo(0,0); }} style={{ background:'none', border:'none', color:SEPIA, fontSize:13, cursor:'pointer', fontFamily:'inherit' }}>← 이전 질문으로</button>
+                <button onClick={() => { navigate(currentQ > 0 ? `${basePath}/q${currentQ}` : basePath); window.scrollTo(0,0); }} style={{ background:'none', border:'none', color:SEPIA, fontSize:13, cursor:'pointer', fontFamily:'inherit' }}>← 이전 질문으로</button>
               </div>
             )}
           </div>

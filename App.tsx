@@ -170,9 +170,7 @@ const App: React.FC = () => {
     location.pathname === '/type-test' ||
     location.pathname === '/type-test-a' ||
     location.pathname === '/type-test-b' ||
-    location.pathname === '/625-test' ||
-    location.pathname === '/625-test-a' ||
-    location.pathname === '/625-test-b' ||
+    location.pathname.startsWith('/625-test') ||
     location.pathname.startsWith('/project-minwon') ||
     location.pathname === '/login' ||
     location.pathname === '/signup';
@@ -310,9 +308,9 @@ const App: React.FC = () => {
           <Route path="/type-test" element={<TypeTest variant="A" />} />
           <Route path="/type-test-a" element={<TypeTest variant="A" />} />
           <Route path="/type-test-b" element={<TypeTest variant="B" />} />
-          <Route path="/625-test" element={<TypeTest625 variant="A" />} />
-          <Route path="/625-test-a" element={<TypeTest625 variant="A" />} />
-          <Route path="/625-test-b" element={<TypeTest625 variant="B" />} />
+          <Route path="/625-test/*" element={<TypeTest625 variant="A" basePath="/625-test" />} />
+          <Route path="/625-test-a/*" element={<TypeTest625 variant="A" basePath="/625-test-a" />} />
+          <Route path="/625-test-b/*" element={<TypeTest625 variant="B" basePath="/625-test-b" />} />
           <Route path="/project-minwon" element={<ProjectMinwonWrapper />} />
           <Route path="/more" element={<MorePage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
