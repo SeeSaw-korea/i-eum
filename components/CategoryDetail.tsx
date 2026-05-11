@@ -319,13 +319,13 @@ const ContentCard: React.FC<{
       className="group cursor-pointer bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col"
     >
       {/* 이미지 영역 */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-gray-50">
+      <div className="relative aspect-[4/3] overflow-hidden bg-white">
         {!imgError ? (
           <img
             src={getImageUrl(item.imageUrl)}
             alt={item.title}
             onError={() => setImgError(true)}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
             referrerPolicy="no-referrer"
           />
         ) : (
