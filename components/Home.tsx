@@ -109,7 +109,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
     { key: 'interview', label: '인터뷰' },
   ] as const;
 
-  const allProjects   = contents.filter(i => i.category === Category.PROJECTS);
+  const allProjects   = contents.filter(i => i.category === Category.PROJECTS && i.deadline !== '진행완료');
   const allSeminars   = contents.filter(i => i.category === Category.SEMINARS);
   const allInsights   = contents.filter(i => i.category === Category.INSIGHTS);
   const allCampaigns  = contents.filter(i => i.category === Category.CAMPAIGNS);
@@ -372,72 +372,31 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
             </button>
           </div>
 
-          {/* Desktop magazine layout */}
-          <div className="hidden md:grid grid-cols-3 gap-4">
-            {/* Large feature card */}
-            {allProjects[0] && (
-              <div
-                onClick={() => navigate(`/content/${allProjects[0].id}`)}
-                className="col-span-2 rounded-3xl overflow-hidden bg-ieumCream border border-ieumBorder hover:shadow-xl transition-all cursor-pointer group"
-              >
-                <div className="aspect-video overflow-hidden bg-gray-50">
-                  <img
-                    src={allProjects[0].imageUrl}
-                    alt={allProjects[0].title}
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6">
-                  <span className="text-[10px] font-bold text-ieumOrange bg-ieumOrange/10 px-2.5 py-1 rounded-full">
-                    {allProjects[0].category}
-                  </span>
-                  <h3 className="text-lg font-black text-ieumDark mt-3 mb-2 line-clamp-2 leading-tight">
-                    {allProjects[0].title}
-                  </h3>
-                  {allProjects[0].deadline && (
-                    <p className="text-xs font-bold text-red-500">{allProjects[0].deadline}</p>
-                  )}
-                </div>
-              </div>
-            )}
-            {/* Small cards */}
-            {allProjects.slice(1, 4).map(item => (
+          {/* Uniform grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {allProjects.map(item => (
               <div
                 key={item.id}
                 onClick={() => navigate(`/content/${item.id}`)}
-                className="rounded-3xl overflow-hidden bg-ieumCream border border-ieumBorder hover:shadow-lg transition-all cursor-pointer group"
+                className="rounded-2xl overflow-hidden bg-white border border-ieumBorder hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex flex-col"
               >
-                <div className="aspect-[4/3] overflow-hidden bg-gray-50">
+                <div className="overflow-hidden bg-gray-50">
                   <img
                     src={item.imageUrl}
                     alt={item.title}
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-auto block group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <div className="p-4">
-                  <span className="text-[10px] font-bold text-ieumOrange bg-ieumOrange/10 px-2 py-0.5 rounded-full">
+                <div className="p-4 flex flex-col flex-1">
+                  <span className="text-[10px] font-bold text-ieumOrange bg-ieumOrange/10 px-2 py-0.5 rounded-full w-fit">
                     {item.category}
                   </span>
-                  <h3 className="text-xs font-bold text-ieumDark mt-2 line-clamp-2 leading-relaxed">{item.title}</h3>
+                  <h3 className="text-sm font-bold text-ieumDark mt-2 mb-1 line-clamp-2 leading-snug flex-1">{item.title}</h3>
                   {item.deadline && (
-                    <p className="text-[10px] font-bold text-red-500 mt-1">{item.deadline}</p>
+                    <p className="text-[11px] font-bold text-red-500">{item.deadline}</p>
                   )}
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* Mobile horizontal scroll */}
-          <div className="md:hidden flex overflow-x-auto gap-3 pb-2 hide-scrollbar">
-            {allProjects.map(item => (
-              <Card
-                key={item.id}
-                item={item}
-                isWishlisted={appState.wishlist.includes(item.id)}
-                onToggleWishlist={toggleWishlist}
-                onClick={() => navigate(`/content/${item.id}`)}
-                variant="small"
-              />
             ))}
           </div>
           <button
