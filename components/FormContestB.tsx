@@ -197,9 +197,63 @@ const FormContestB: React.FC = () => {
               </div>
             </div>
 
+            {/* 참전용사 현황 */}
+            <div className="rounded-3xl overflow-hidden mb-5" style={{ border: '2px solid #E8E0D0', background: '#FFFDF8' }}>
+              {/* 인용구 */}
+              <div className="px-6 py-5 text-center" style={{ borderBottom: '1px solid #F0EBE0' }}>
+                <p className="text-[11px] font-semibold text-gray-400 mb-2 tracking-wide uppercase">💬 한 참전용사 어르신의 말씀</p>
+                <p className="text-sm leading-loose text-gray-600 italic">
+                  "전쟁이란 거는 절대 있으면 안 돼...<br />
+                  참 많이 힘들었지. 그래도 말이야,<br />
+                  <strong className="not-italic" style={{ color: NAVY }}>너희가 이렇게 잘 살고 있으니까 충분해.</strong>"
+                </p>
+              </div>
+
+              {/* 메인 메시지 */}
+              <div className="px-6 pt-5 pb-3 text-center">
+                <p className="text-base font-black leading-snug" style={{ color: NAVY }}>
+                  어르신은 '충분하다'고 말하지만,
+                </p>
+                <p className="text-base font-black leading-snug mb-3" style={{ color: '#C0392B' }}>
+                  우리는 정말 충분한가요?
+                </p>
+                <p className="text-xs text-gray-400 leading-relaxed">
+                  명예로운 이름 뒤에 가려진<br />냉혹한 생활고와 고립된 노후
+                </p>
+              </div>
+
+              {/* 현실 카드 3개 */}
+              <div className="px-5 pb-4 space-y-2">
+                {([
+                  { num: '1', label: '차가운 단칸방', sub: '열악한 주거환경과 지속되는 생활고' },
+                  { num: '2', label: '반복되는 병원방문', sub: '전상 후유증으로 지속적인 치료 필요' },
+                  { num: '3', label: '부족한 지원', sub: '참전명예수당 월 38만원 (2026년 기준)' },
+                ] as { num: string; label: string; sub: string }[]).map(({ num, label, sub }) => (
+                  <div key={num} className="flex items-center gap-3 bg-white rounded-xl px-4 py-2.5" style={{ border: '1px solid #F0EBE0' }}>
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black text-white flex-shrink-0" style={{ background: '#C0392B' }}>
+                      {num}
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-gray-800">{label}</p>
+                      <p className="text-[11px] text-gray-400">{sub}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* 마무리 문장 */}
+              <div className="px-6 pt-2 pb-5 text-center" style={{ borderTop: '1px solid #F0EBE0' }}>
+                <p className="text-xs text-gray-500 leading-loose">
+                  아픈 몸보다 더 아픈 건,<br />
+                  영웅이라 부르면서도 잊고 살아온<br />
+                  <strong style={{ color: NAVY }}>우리의 무관심</strong>일지도 모릅니다.
+                </p>
+              </div>
+            </div>
+
             <div className="bg-white rounded-2xl p-4 border border-gray-100 text-xs text-gray-500 leading-relaxed text-center">
               아래 버튼을 눌러 아이디어를 제출해주세요.<br />
-              <strong style={{ color: NAVY }}>세대를 잇는 당신의 아이디어</strong>를 기다립니다.
+              <strong style={{ color: NAVY }}>참전용사를 위한 당신의 아이디어</strong>를 기다립니다.
             </div>
           </div>
         )}
