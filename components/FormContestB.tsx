@@ -7,7 +7,7 @@ type Step = 1 | 2 | 3 | 4;
 
 interface PersonalInfo {
   name: string; age: string; phone: string; email: string;
-  region: string; job: string; referral: string;
+  region: string; addressDetail: string; job: string; referral: string;
 }
 interface IdeaInfo {
   q1: string; q2: string; q3: string; q4: string;
@@ -24,7 +24,7 @@ const GOLD = '#C8A84B';
 const FormContestB: React.FC = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState<Step>(1);
-  const [personal, setPersonal] = useState<PersonalInfo>({ name:'', age:'', phone:'', email:'', region:'', job:'', referral:'' });
+  const [personal, setPersonal] = useState<PersonalInfo>({ name:'', age:'', phone:'', email:'', region:'', addressDetail:'', job:'', referral:'' });
   const [idea, setIdea] = useState<IdeaInfo>({ q1:'', q2:'', q3:'', q4:'', q5:'', q6:'', q7:'', pledgeAgreed:false });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -38,8 +38,9 @@ const FormContestB: React.FC = () => {
     if (!personal.age)      return '나이를 입력해주세요.';
     if (!personal.phone)    return '전화번호를 입력해주세요.';
     if (!personal.email)    return '이메일을 입력해주세요.';
-    if (!personal.region)   return '거주 지역을 선택해주세요.';
-    if (!personal.job)      return '소속/직업을 선택해주세요.';
+    if (!personal.region)        return '거주 지역을 선택해주세요.';
+    if (!personal.addressDetail) return '세부 주소를 입력해주세요.';
+    if (!personal.job)           return '소속/직업을 선택해주세요.';
     if (!personal.referral) return '신청 경로를 선택해주세요.';
     return null;
   };
@@ -68,7 +69,7 @@ const FormContestB: React.FC = () => {
     try {
       await supabase.from('AD-ieum-contest-b').insert({
         name: personal.name, age: personal.age, phone: personal.phone, email: personal.email,
-        region: personal.region, job: personal.job, referral: personal.referral,
+        region: personal.region, address_detail: personal.addressDetail, job: personal.job, referral: personal.referral,
         q1: idea.q1, q2: idea.q2, q3: idea.q3, q4: idea.q4,
         q5: idea.q5, q6: idea.q6, q7: idea.q7,
         pledge_agreed: idea.pledgeAgreed, receipt_number: num,
@@ -214,6 +215,9 @@ const FormContestB: React.FC = () => {
               <Field label="전화번호" required><input type="tel" value={personal.phone} onChange={e => setP('phone', e.target.value)} placeholder="01012345678" className="form-input-b" /></Field>
               <Field label="이메일" required><input type="email" value={personal.email} onChange={e => setP('email', e.target.value)} placeholder="example@email.com" className="form-input-b" /></Field>
               <Field label="거주 지역" required><RadioGroupB options={REGIONS} value={personal.region} onChange={v => setP('region', v)} navy={NAVY} /></Field>
+              <Field label="세부 주소" required>
+                <input type="text" value={personal.addressDetail} onChange={e => setP('addressDetail', e.target.value)} placeholder="ex) 서울 관악구 신림동" className="form-input-b" />
+              </Field>
               <Field label="소속 / 직업" required><RadioGroupB options={JOBS} value={personal.job} onChange={v => setP('job', v)} cols={2} navy={NAVY} /></Field>
               <Field label="신청 경로" required><RadioGroupB options={REFERRALS} value={personal.referral} onChange={v => setP('referral', v)} cols={2} navy={NAVY} /></Field>
               <div className="bg-gray-50 border border-gray-100 rounded-xl p-4 text-xs text-gray-400 leading-relaxed">
@@ -304,6 +308,7 @@ const FormContestB: React.FC = () => {
               <ReviewRowB label="전화번호" value={personal.phone} />
               <ReviewRowB label="이메일" value={personal.email} />
               <ReviewRowB label="거주 지역" value={personal.region} />
+              <ReviewRowB label="세부 주소" value={personal.addressDetail} />
               <ReviewRowB label="소속/직업" value={personal.job} />
               <ReviewRowB label="신청 경로" value={personal.referral} />
             </ReviewSectionB>
