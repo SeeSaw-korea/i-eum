@@ -240,41 +240,41 @@ const FormContestB: React.FC = () => {
         {step === 3 && (
           <div>
             <h2 className="text-xl font-bold mb-1" style={{ color: NAVY }}>아이디어를 작성해주세요</h2>
-            <p className="text-sm text-gray-400 mb-5">당신이 연결해보고 싶은 세대의 이야기를 들려주세요.</p>
+            <p className="text-sm text-gray-400 mb-5">참전용사를 위한 당신의 따뜻한 아이디어를 들려주세요.</p>
 
             <div className="flex flex-col gap-4">
               <IdeaFieldB num="Q1" navy={NAVY}
-                label="당신이 만들고 싶은 '세대 연결'을 한 줄로 소개해주세요."
-                hint="ex) 청년과 시니어가 서로의 하루를 체험하며 기록하는 세대 교환 프로젝트"
+                label="참전용사 처우개선을 위한 당신의 아이디어를 한 줄로 소개해주세요."
+                hint="ex) 참전용사의 이야기를 청년이 직접 기록하는 구술사 아카이브 프로젝트"
                 value={idea.q1} onChange={v => setI('q1', v)} maxLen={150} rows={2} required />
 
               <IdeaFieldB num="Q2" navy={NAVY}
-                label="이 아이디어를 떠올리게 된 배경 이야기를 들려주세요."
-                hint="왜 이 연결이 필요하다고 느꼈나요? 당신이 경험한 세대 간 거리감이나 인상 깊었던 순간을 자유롭게 작성해주세요."
+                label="이 아이디어를 떠올리게 된 계기나 배경 이야기를 들려주세요."
+                hint="참전용사와 관련된 경험, 뉴스, 혹은 사회 문제를 보며 느낀 점을 자유롭게 적어주세요."
                 value={idea.q2} onChange={v => setI('q2', v)} rows={6} required />
 
               <IdeaFieldB num="Q3" navy={NAVY}
-                label="당신의 연결 프로젝트 이름을 지어주세요."
+                label="당신의 아이디어 이름을 지어주세요."
                 value={idea.q3} onChange={v => setI('q3', v)} rows={1} required />
 
               <IdeaFieldB num="Q4" navy={NAVY}
-                label="이 아이디어는 세대 간 어떤 거리감을 해결하나요?"
-                hint="사람과 사람이 실제로 연결되는 방식과, 그 안에서 어떤 경험이 만들어지는지 자유롭게 설명해주세요."
+                label="이 아이디어가 해결하려는 참전용사의 구체적인 문제는 무엇인가요?"
+                hint="의료·복지·명예·사회적 인식·경제적 지원 등 어떤 영역의 문제를 다루는지 구체적으로 설명해주세요."
                 value={idea.q4} onChange={v => setI('q4', v)} rows={5} required />
 
               <IdeaFieldB num="Q5" navy={NAVY}
-                label="이 연결은 현실에서 어떻게 이루어질 수 있을까요?"
-                hint="어떤 방식으로 사람들이 연결되나요? 필요한 사람·공간·기술은 무엇인가요? 작은 규모로 시작한다면 어느 정도 비용이 필요할까요?"
+                label="이 아이디어는 어떻게 실현될 수 있을까요?"
+                hint="실행 방법, 필요한 인력·자원·예산, 작은 규모로 시작한다면 어떻게 시작할 수 있을지 설명해주세요."
                 value={idea.q5} onChange={v => setI('q5', v)} rows={5} required />
 
               <IdeaFieldB num="Q6" navy={NAVY}
-                label="이 연결은 우리 사회에 어떤 변화를 만들 수 있을까요?"
-                hint="참여자들에게 어떤 새로운 경험과 관계가 생길까요? 시간이 지나며 세대 간 어떤 변화가 만들어질까요?"
+                label="이 아이디어가 성공했을 때, 참전용사와 우리 사회에 어떤 변화가 생길까요?"
+                hint="참전용사 당사자에게 미치는 영향과 사회 전반의 인식 변화를 함께 작성해주세요."
                 value={idea.q6} onChange={v => setI('q6', v)} rows={5} required />
 
               <IdeaFieldB num="Q7" navy={NAVY}
-                label="당신도 직접 참여해보고 싶은 아이디어인가요?"
-                hint="그 이유를 자유롭게 들려주세요."
+                label="당신은 왜 이 아이디어에 참여하고 싶으신가요?"
+                hint="참전용사를 위해 직접 행동하고 싶다는 마음이 어디서 왔는지 자유롭게 적어주세요."
                 value={idea.q7} onChange={v => setI('q7', v)} rows={4} required />
 
               {/* 서약서 */}
@@ -322,11 +322,11 @@ const FormContestB: React.FC = () => {
             <ReviewSectionB title="아이디어" navy={NAVY}>
               <ReviewRowB label="Q1 한 줄 소개" value={idea.q1} />
               <ReviewRowB label="Q2 배경 이야기" value={idea.q2} truncate />
-              <ReviewRowB label="Q3 프로젝트 이름" value={idea.q3} />
-              <ReviewRowB label="Q4 해결 방식" value={idea.q4} truncate />
+              <ReviewRowB label="Q3 아이디어 이름" value={idea.q3} />
+              <ReviewRowB label="Q4 해결 문제" value={idea.q4} truncate />
               <ReviewRowB label="Q5 실현 방법" value={idea.q5} truncate />
-              <ReviewRowB label="Q6 사회적 변화" value={idea.q6} truncate />
-              <ReviewRowB label="Q7 직접 참여" value={idea.q7} truncate />
+              <ReviewRowB label="Q6 기대 변화" value={idea.q6} truncate />
+              <ReviewRowB label="Q7 참여 이유" value={idea.q7} truncate />
               <ReviewRowB label="서약서 동의" value={idea.pledgeAgreed ? '✅ 동의' : '미동의'} />
             </ReviewSectionB>
 
