@@ -369,7 +369,7 @@ const FormContestC: React.FC = () => {
             </ReviewSectionC>
 
             <div className="rounded-xl p-4 text-xs text-gray-400 mt-2 mb-4 text-center border border-gray-100 bg-white">
-              제출 후 결과는 입력하신 이메일로 안내드립니다.<br />
+              제출 후 결과는 입력하신 전화번호로 안내드립니다.<br />
               <strong style={{ color: NAVY }}>선착순 50명</strong>께 스타벅스 기프티콘을 발송합니다.
             </div>
           </div>
