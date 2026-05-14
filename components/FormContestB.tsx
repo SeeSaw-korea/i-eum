@@ -7,15 +7,14 @@ type Step = 1 | 2 | 3 | 4;
 
 interface PersonalInfo {
   name: string; age: string; phone: string; email: string;
-  region: string; addressDetail: string; job: string; referral: string;
+  region: string; addressDetail: string; job: string; jobOther: string; referral: string;
 }
 interface IdeaInfo {
-  q1: string; q2: string; q3: string; q4: string;
-  q5: string; q6: string; q7: string; pledgeAgreed: boolean;
+  q1: string; q2Name: string; q2Content: string; q3: string; pledgeAgreed: boolean;
 }
 
 const REGIONS  = ['서울', '경기', '인천', '기타'];
-const JOBS     = ['대학생', '직장인', '취업준비생', '고등학생', '기타'];
+const JOBS     = ['대학생', '직장인', '군인', '취업준비생', '고등학생', '기타'];
 const REFERRALS = ['인스타그램', '지인 추천', '유튜브', '기타'];
 
 const NAVY = '#1A2B5C';
@@ -24,8 +23,8 @@ const GOLD = '#C8A84B';
 const FormContestB: React.FC = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState<Step>(1);
-  const [personal, setPersonal] = useState<PersonalInfo>({ name:'', age:'', phone:'', email:'', region:'', addressDetail:'', job:'', referral:'' });
-  const [idea, setIdea] = useState<IdeaInfo>({ q1:'', q2:'', q3:'', q4:'', q5:'', q6:'', q7:'', pledgeAgreed:false });
+  const [personal, setPersonal] = useState<PersonalInfo>({ name:'', age:'', phone:'', email:'', region:'', addressDetail:'', job:'', jobOther:'', referral:'' });
+  const [idea, setIdea] = useState<IdeaInfo>({ q1:'', q2Name:'', q2Content:'', q3:'', pledgeAgreed:false });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [receiptNum, setReceiptNum] = useState('');
@@ -41,17 +40,15 @@ const FormContestB: React.FC = () => {
     if (!personal.region)        return '거주 지역을 선택해주세요.';
     if (!personal.addressDetail) return '세부 주소를 입력해주세요.';
     if (!personal.job)           return '소속/직업을 선택해주세요.';
+    if (personal.job === '기타' && !personal.jobOther) return '직업을 직접 입력해주세요.';
     if (!personal.referral) return '신청 경로를 선택해주세요.';
     return null;
   };
   const validateStep3 = () => {
-    if (!idea.q1) return 'Q1 참전용사 경험을 작성해주세요.';
-    if (!idea.q2) return 'Q2 아이디어 한 문장 소개를 작성해주세요.';
-    if (!idea.q3) return 'Q3 배경 이야기를 작성해주세요.';
-    if (!idea.q4) return 'Q4 사회적 거리감에 대해 작성해주세요.';
-    if (!idea.q5) return 'Q5 프로젝트 이름을 작성해주세요.';
-    if (!idea.q6) return 'Q6 연결 방식을 작성해주세요.';
-    if (!idea.q7) return 'Q7 실현 방법을 작성해주세요.';
+    if (!idea.q1)        return 'Q1 경험/이야기를 작성해주세요.';
+    if (!idea.q2Name)    return 'Q2 프로젝트 이름을 작성해주세요.';
+    if (!idea.q2Content) return 'Q2 프로젝트 내용을 작성해주세요.';
+    if (!idea.q3)        return 'Q3 내용을 작성해주세요.';
     if (!idea.pledgeAgreed) return '서약서에 동의해주세요.';
     return null;
   };
@@ -69,9 +66,12 @@ const FormContestB: React.FC = () => {
     try {
       await supabase.from('AD-ieum-contest-b').insert({
         name: personal.name, age: personal.age, phone: personal.phone, email: personal.email,
-        region: personal.region, address_detail: personal.addressDetail, job: personal.job, referral: personal.referral,
-        q1: idea.q1, q2: idea.q2, q3: idea.q3, q4: idea.q4,
-        q5: idea.q5, q6: idea.q6, q7: idea.q7,
+        region: personal.region, address_detail: personal.addressDetail,
+        job: personal.job === '기타' && personal.jobOther ? `기타(${personal.jobOther})` : personal.job,
+        referral: personal.referral,
+        q1: idea.q1,
+        q2: `[프로젝트 이름]\n${idea.q2Name}\n\n[프로젝트 내용]\n${idea.q2Content}`,
+        q3: idea.q3,
         pledge_agreed: idea.pledgeAgreed, receipt_number: num,
       });
     } catch (_) { /* fail silently */ }
@@ -280,7 +280,12 @@ const FormContestB: React.FC = () => {
                   <input type="text" value={personal.addressDetail} onChange={e => setP('addressDetail', e.target.value)} placeholder="ex) 서울 관악구 신림동" className="form-input-b" />
                 </Field>
               </div>
-              <Field label="소속 / 직업" required><RadioGroupB options={JOBS} value={personal.job} onChange={v => setP('job', v)} cols={2} navy={NAVY} /></Field>
+              <Field label="소속 / 직업" required><RadioGroupB options={JOBS} value={personal.job} onChange={v => { setP('job', v); if (v !== '기타') setP('jobOther', ''); }} cols={2} navy={NAVY} /></Field>
+              {personal.job === '기타' && (
+                <Field label="직업 직접 입력" required>
+                  <input type="text" value={personal.jobOther} onChange={e => setP('jobOther', e.target.value)} placeholder="직업을 입력해주세요." className="form-input-b" />
+                </Field>
+              )}
               <Field label="신청 경로" required><RadioGroupB options={REFERRALS} value={personal.referral} onChange={v => setP('referral', v)} cols={2} navy={NAVY} /></Field>
               <div className="bg-gray-50 border border-gray-100 rounded-xl p-4 text-xs text-gray-400 leading-relaxed">
                 <p className="font-bold text-gray-600 mb-1">개인정보 수집·이용 안내</p>
@@ -300,38 +305,52 @@ const FormContestB: React.FC = () => {
 
             <div className="flex flex-col gap-4">
               <IdeaFieldB num="Q1" navy={NAVY}
-                label="당신이 기억하는 참전용사와 관련된 경험이나 이야기를 들려주세요."
-                hint="현충일, 호국보훈, 가족 이야기, 뉴스, 일상 속 순간 등 인상 깊었던 경험을 자유롭게 작성해주세요."
+                label="참전용사와 관련해 가장 기억에 남는 경험이나 이야기를 들려주세요."
+                hint={"참전용사·현충일·호국보훈과 관련해 인상 깊었던 경험이나,\n당연했던 일상이 누군가의 희생 위에 있다는 걸 느꼈던 순간이 있다면 자유롭게 작성해주세요."}
                 value={idea.q1} onChange={v => setI('q1', v)} rows={5} required />
 
-              <IdeaFieldB num="Q2" navy={NAVY}
-                label="참전용사를 위해 당신이 만들고 싶은 변화나 연결을 한 문장으로 소개해주세요."
-                hint={"예시\n· 참전용사의 이야기를 청년들의 숏폼 콘텐츠로 기록하는 프로젝트\n· 혼자 지내는 참전용사와 청년이 연결되는 세대 교류 프로그램"}
-                value={idea.q2} onChange={v => setI('q2', v)} maxLen={200} rows={2} required />
+              {/* Q2 - 프로젝트 이름 + 내용 */}
+              <div className="bg-white rounded-2xl p-5 border border-gray-100">
+                <p className="text-xs font-black mb-1" style={{ color: NAVY }}>
+                  Q2 <span className="font-bold text-sm text-gray-800">· 참전용사와 우리 세대를 잇는 당신만의 프로젝트 아이디어를 들려주세요.</span>
+                  <span className="text-red-500 ml-1">*</span>
+                </p>
+                <div className="rounded-xl px-4 py-3 mb-4 text-xs leading-relaxed space-y-1" style={{ background: `${NAVY}06` }}>
+                  <p className="font-semibold mb-1" style={{ color: NAVY }}>예시</p>
+                  <p className="text-gray-500">· 참전용사의 이야기를 청년들의 숏폼 콘텐츠로 기록하는 프로젝트</p>
+                  <p className="text-gray-500">· 혼자 지내는 참전용사와 청년이 연결되는 세대 교류 프로그램</p>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-600 mb-1.5">프로젝트 이름 <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      value={idea.q2Name}
+                      onChange={e => setI('q2Name', e.target.value)}
+                      placeholder="ex) 영웅의 온기, 기억을 잇다"
+                      className="form-input-b"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-600 mb-1.5">프로젝트 내용 <span className="text-red-500">*</span></label>
+                    <textarea
+                      value={idea.q2Content}
+                      onChange={e => setI('q2Content', e.target.value)}
+                      rows={5}
+                      placeholder="어떤 방식으로 연결하고 싶은지 자유롭게 설명해주세요."
+                      className="w-full border border-gray-200 rounded-xl p-3 text-sm text-gray-800 bg-gray-50 resize-none outline-none transition-colors"
+                      style={{ fontFamily: 'inherit' }}
+                      onFocus={e => (e.target.style.borderColor = NAVY)}
+                      onBlur={e => (e.target.style.borderColor = '#E5E7EB')}
+                    />
+                  </div>
+                </div>
+              </div>
 
               <IdeaFieldB num="Q3" navy={NAVY}
-                label="이 아이디어를 떠올리게 된 배경 이야기를 들려주세요."
-                hint="왜 지금 이 연결이 필요하다고 느꼈나요?"
-                value={idea.q3} onChange={v => setI('q3', v)} rows={5} required />
-
-              <IdeaFieldB num="Q4" navy={NAVY}
-                label="참전용사와 오늘의 사회 사이에 어떤 거리감이 있다고 느끼셨나요?"
-                hint="처우, 인식, 관계, 기억 방식 등 자유롭게 작성해주세요."
-                value={idea.q4} onChange={v => setI('q4', v)} rows={5} required />
-
-              <IdeaFieldB num="Q5" navy={NAVY}
-                label="당신의 아이디어 프로젝트에 이름을 붙여주세요."
-                value={idea.q5} onChange={v => setI('q5', v)} rows={1} required />
-
-              <IdeaFieldB num="Q6" navy={NAVY}
-                label="이 아이디어는 참전용사와 사회를 어떻게 연결하나요?"
-                hint="어떤 변화와 경험을 만들어낼 수 있는지 자유롭게 설명해주세요."
-                value={idea.q6} onChange={v => setI('q6', v)} rows={5} required />
-
-              <IdeaFieldB num="Q7" navy={NAVY}
-                label="이 아이디어는 현실에서 어떻게 이어질 수 있을까요?"
-                hint={"어떤 방식으로 사람들이 참여하게 되나요?\n필요한 사람·공간·기술은 무엇인가요?\n작은 규모로 시작한다면 어떻게 시작할 수 있을까요?"}
-                value={idea.q7} onChange={v => setI('q7', v)} rows={5} required />
+                label="왜 이 아이디어가 필요하며, 실제로 어떻게 운영될 수 있을까요?"
+                hint={"현재 우리가 느끼는 거리감을 어떻게 해소할 수 있을지,\n그리고 구체적인 참여 방식이나 필요한 도움은 무엇인지 적어주세요."}
+                value={idea.q3} onChange={v => setI('q3', v)} rows={6} required />
 
               {/* 서약서 */}
               <div className="bg-white rounded-2xl p-5 border border-gray-100">
@@ -371,23 +390,20 @@ const FormContestB: React.FC = () => {
               <ReviewRowB label="이메일" value={personal.email} />
               <ReviewRowB label="거주 지역" value={personal.region} />
               <ReviewRowB label="세부 주소" value={personal.addressDetail} />
-              <ReviewRowB label="소속/직업" value={personal.job} />
+              <ReviewRowB label="소속/직업" value={personal.job === '기타' && personal.jobOther ? `기타(${personal.jobOther})` : personal.job} />
               <ReviewRowB label="신청 경로" value={personal.referral} />
             </ReviewSectionB>
 
             <ReviewSectionB title="아이디어" navy={NAVY}>
               <ReviewRowB label="Q1 경험/이야기" value={idea.q1} truncate />
-              <ReviewRowB label="Q2 한 문장 소개" value={idea.q2} truncate />
-              <ReviewRowB label="Q3 배경 이야기" value={idea.q3} truncate />
-              <ReviewRowB label="Q4 사회적 거리감" value={idea.q4} truncate />
-              <ReviewRowB label="Q5 프로젝트 이름" value={idea.q5} />
-              <ReviewRowB label="Q6 연결 방식" value={idea.q6} truncate />
-              <ReviewRowB label="Q7 실현 방법" value={idea.q7} truncate />
+              <ReviewRowB label="Q2 프로젝트 이름" value={idea.q2Name} />
+              <ReviewRowB label="Q2 프로젝트 내용" value={idea.q2Content} truncate />
+              <ReviewRowB label="Q3 필요성·운영" value={idea.q3} truncate />
               <ReviewRowB label="서약서 동의" value={idea.pledgeAgreed ? '✅ 동의' : '미동의'} />
             </ReviewSectionB>
 
             <div className="rounded-xl p-4 text-xs text-gray-400 mt-2 mb-4 text-center border border-gray-100 bg-white">
-              제출 후 결과는 입력하신 이메일로 안내드립니다.<br />
+              제출 후 결과는 입력하신 전화번호로 안내드립니다.<br />
               <strong style={{ color: NAVY }}>선착순 50명</strong>께 스타벅스 기프티콘을 발송합니다.
             </div>
           </div>
