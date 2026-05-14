@@ -11,7 +11,7 @@ interface PersonalInfo {
 }
 interface IdeaInfo {
   q1: string; q2: string; q3: string; q4: string;
-  q5: string; q6: string; q7: string; q8: string; pledgeAgreed: boolean;
+  q5: string; q6: string; q7: string; pledgeAgreed: boolean;
 }
 
 const REGIONS  = ['서울', '경기', '인천', '기타'];
@@ -25,7 +25,7 @@ const FormContestB: React.FC = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState<Step>(1);
   const [personal, setPersonal] = useState<PersonalInfo>({ name:'', age:'', phone:'', email:'', region:'', addressDetail:'', job:'', referral:'' });
-  const [idea, setIdea] = useState<IdeaInfo>({ q1:'', q2:'', q3:'', q4:'', q5:'', q6:'', q7:'', q8:'', pledgeAgreed:false });
+  const [idea, setIdea] = useState<IdeaInfo>({ q1:'', q2:'', q3:'', q4:'', q5:'', q6:'', q7:'', pledgeAgreed:false });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [receiptNum, setReceiptNum] = useState('');
@@ -46,13 +46,12 @@ const FormContestB: React.FC = () => {
   };
   const validateStep3 = () => {
     if (!idea.q1) return 'Q1 참전용사 경험을 작성해주세요.';
-    if (!idea.q2) return 'Q2 아이디어 한 줄 소개를 작성해주세요.';
+    if (!idea.q2) return 'Q2 아이디어 한 문장 소개를 작성해주세요.';
     if (!idea.q3) return 'Q3 배경 이야기를 작성해주세요.';
-    if (!idea.q4) return 'Q4 처우 개선이 필요한 이유를 작성해주세요.';
+    if (!idea.q4) return 'Q4 사회적 거리감에 대해 작성해주세요.';
     if (!idea.q5) return 'Q5 프로젝트 이름을 작성해주세요.';
-    if (!idea.q6) return 'Q6 해결하려는 문제를 작성해주세요.';
+    if (!idea.q6) return 'Q6 연결 방식을 작성해주세요.';
     if (!idea.q7) return 'Q7 실현 방법을 작성해주세요.';
-    if (!idea.q8) return 'Q8 기대하는 사회 변화를 작성해주세요.';
     if (!idea.pledgeAgreed) return '서약서에 동의해주세요.';
     return null;
   };
@@ -72,7 +71,7 @@ const FormContestB: React.FC = () => {
         name: personal.name, age: personal.age, phone: personal.phone, email: personal.email,
         region: personal.region, address_detail: personal.addressDetail, job: personal.job, referral: personal.referral,
         q1: idea.q1, q2: idea.q2, q3: idea.q3, q4: idea.q4,
-        q5: idea.q5, q6: idea.q6, q7: idea.q7, q8: idea.q8,
+        q5: idea.q5, q6: idea.q6, q7: idea.q7,
         pledge_agreed: idea.pledgeAgreed, receipt_number: num,
       });
     } catch (_) { /* fail silently */ }
@@ -151,12 +150,14 @@ const FormContestB: React.FC = () => {
                 <div className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full mb-4" style={{ background: NAVY, color: 'white' }}>
                   🎗️ 6월, 호국보훈의 달
                 </div>
-                <p className="text-sm font-bold mb-1" style={{ color: NAVY }}>잊지 말고, 이음</p>
-                <h1 className="text-3xl font-black leading-tight mb-3" style={{ color: NAVY }}>
-                  아이디어<br />공모전
+                <p className="text-sm italic text-gray-500 leading-relaxed mb-3">
+                  "당신의 오늘은<br />누군가가 지켜낸 하루입니다."
+                </p>
+                <h1 className="text-2xl font-black leading-tight mb-1" style={{ color: NAVY }}>
+                  잊지 말고, 잇자.
                 </h1>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  참전용사 처우개선을 위한<br />따뜻한 아이디어를 보내주세요
+                  참전용사와 오늘의 청년을 연결하는<br />아이디어 공모전
                 </p>
               </div>
 
@@ -299,42 +300,38 @@ const FormContestB: React.FC = () => {
 
             <div className="flex flex-col gap-4">
               <IdeaFieldB num="Q1" navy={NAVY}
-                label="당신이 기억하는 참전용사에 대한 경험이나 이야기를 나눠주세요."
+                label="당신이 기억하는 참전용사와 관련된 경험이나 이야기를 들려주세요."
+                hint="현충일, 호국보훈, 가족 이야기, 뉴스, 일상 속 순간 등 인상 깊었던 경험을 자유롭게 작성해주세요."
                 value={idea.q1} onChange={v => setI('q1', v)} rows={5} required />
 
               <IdeaFieldB num="Q2" navy={NAVY}
-                label="당신이 제안하고 싶은 참전용사 처우 개선 아이디어를 한 문장으로 소개해 주세요."
-                hint="ex) 참전용사의 생활 향상을 위한 프로그램 제안"
-                value={idea.q2} onChange={v => setI('q2', v)} maxLen={150} rows={2} required />
+                label="참전용사를 위해 당신이 만들고 싶은 변화나 연결을 한 문장으로 소개해주세요."
+                hint={"예시\n· 참전용사의 이야기를 청년들의 숏폼 콘텐츠로 기록하는 프로젝트\n· 혼자 지내는 참전용사와 청년이 연결되는 세대 교류 프로그램"}
+                value={idea.q2} onChange={v => setI('q2', v)} maxLen={200} rows={2} required />
 
               <IdeaFieldB num="Q3" navy={NAVY}
                 label="이 아이디어를 떠올리게 된 배경 이야기를 들려주세요."
+                hint="왜 지금 이 연결이 필요하다고 느꼈나요?"
                 value={idea.q3} onChange={v => setI('q3', v)} rows={5} required />
 
               <IdeaFieldB num="Q4" navy={NAVY}
-                label="참전용사의 처우 개선이 필요하다고 느꼈던 이유는 무엇인가요?"
-                hint="특별한 경험이나 인상 깊었던 순간을 자유롭게 작성해 주세요."
+                label="참전용사와 오늘의 사회 사이에 어떤 거리감이 있다고 느끼셨나요?"
+                hint="처우, 인식, 관계, 기억 방식 등 자유롭게 작성해주세요."
                 value={idea.q4} onChange={v => setI('q4', v)} rows={5} required />
 
               <IdeaFieldB num="Q5" navy={NAVY}
-                label="당신의 아이디어에 적합한 프로젝트 이름은 무엇인가요?"
-                hint="이 프로젝트를 대표하는 창의적인 이름을 지어주세요."
+                label="당신의 아이디어 프로젝트에 이름을 붙여주세요."
                 value={idea.q5} onChange={v => setI('q5', v)} rows={1} required />
 
               <IdeaFieldB num="Q6" navy={NAVY}
-                label="이 아이디어는 참전용사의 어떤 문제를 해결하나요?"
-                hint="구체적으로 어떤 처우 개선을 이루고자 하는지 설명해 주세요."
+                label="이 아이디어는 참전용사와 사회를 어떻게 연결하나요?"
+                hint="어떤 변화와 경험을 만들어낼 수 있는지 자유롭게 설명해주세요."
                 value={idea.q6} onChange={v => setI('q6', v)} rows={5} required />
 
               <IdeaFieldB num="Q7" navy={NAVY}
-                label="이 개선 아이디어는 현실에서 어떻게 이루어질 수 있을까요?"
-                hint="사람들이 연결되거나 프로그램을 운영하기 위해 필요한 방법과 자원은 무엇인가요? 초기 비용은 어느 정도가 예상되나요?"
+                label="이 아이디어는 현실에서 어떻게 이어질 수 있을까요?"
+                hint={"어떤 방식으로 사람들이 참여하게 되나요?\n필요한 사람·공간·기술은 무엇인가요?\n작은 규모로 시작한다면 어떻게 시작할 수 있을까요?"}
                 value={idea.q7} onChange={v => setI('q7', v)} rows={5} required />
-
-              <IdeaFieldB num="Q8" navy={NAVY}
-                label="이 개선이 우리 사회에 어떤 긍정적인 변화를 가져올 수 있을까요?"
-                hint="참전용사와 사회가 서로 어떻게 연결되고, 결과적으로 어떤 변화가 생길까요?"
-                value={idea.q8} onChange={v => setI('q8', v)} rows={5} required />
 
               {/* 서약서 */}
               <div className="bg-white rounded-2xl p-5 border border-gray-100">
@@ -379,14 +376,13 @@ const FormContestB: React.FC = () => {
             </ReviewSectionB>
 
             <ReviewSectionB title="아이디어" navy={NAVY}>
-              <ReviewRowB label="Q1 참전용사 경험" value={idea.q1} truncate />
-              <ReviewRowB label="Q2 아이디어 소개" value={idea.q2} truncate />
+              <ReviewRowB label="Q1 경험/이야기" value={idea.q1} truncate />
+              <ReviewRowB label="Q2 한 문장 소개" value={idea.q2} truncate />
               <ReviewRowB label="Q3 배경 이야기" value={idea.q3} truncate />
-              <ReviewRowB label="Q4 개선 필요 이유" value={idea.q4} truncate />
+              <ReviewRowB label="Q4 사회적 거리감" value={idea.q4} truncate />
               <ReviewRowB label="Q5 프로젝트 이름" value={idea.q5} />
-              <ReviewRowB label="Q6 해결 문제" value={idea.q6} truncate />
+              <ReviewRowB label="Q6 연결 방식" value={idea.q6} truncate />
               <ReviewRowB label="Q7 실현 방법" value={idea.q7} truncate />
-              <ReviewRowB label="Q8 사회적 변화" value={idea.q8} truncate />
               <ReviewRowB label="서약서 동의" value={idea.pledgeAgreed ? '✅ 동의' : '미동의'} />
             </ReviewSectionB>
 
