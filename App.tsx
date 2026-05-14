@@ -16,6 +16,7 @@ import FormIndependence from './components/FormIndependence';
 import FormSoldier from './components/FormSoldier';
 import FormContestA from './components/FormContestA';
 import FormContestB from './components/FormContestB';
+import FormContestC from './components/FormContestC';
 import ProjectLetter1 from './components/ProjectLetter1';
 import ProjectLetter2 from './components/ProjectLetter2';
 import ProjectTest from './components/ProjectTest';
@@ -181,6 +182,7 @@ const App: React.FC = () => {
     location.pathname.startsWith('/form-') ||
     location.pathname === '/contest-a' ||
     location.pathname === '/contest-b' ||
+    location.pathname === '/contest-c' ||
     location.pathname === '/random-box' ||
     location.pathname === '/survival-a' ||
     location.pathname === '/survival-b' ||
@@ -320,6 +322,7 @@ const App: React.FC = () => {
           <Route path="/form-soldier" element={<FormSoldier />} />
           <Route path="/contest-a" element={<FormContestA />} />
           <Route path="/contest-b" element={<FormContestB />} />
+          <Route path="/contest-c" element={<FormContestC />} />
           <Route path="/random-box" element={<ProjectRandomBox />} />
           <Route path="/survival-a" element={<TypeTest variant="A" />} />
           <Route path="/survival-b" element={<TypeTest variant="B" />} />
