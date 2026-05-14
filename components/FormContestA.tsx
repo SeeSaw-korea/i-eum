@@ -134,7 +134,7 @@ const FormContestA: React.FC = () => {
     <div className="min-h-screen bg-ieumCream" style={{ fontFamily: "'Pretendard', 'Noto Sans KR', sans-serif" }}>
       {/* header */}
       <header className="sticky top-0 z-50 bg-white border-b border-ieumBorder shadow-sm">
-        <div className="max-w-lg mx-auto px-4 h-14 flex items-center gap-3">
+        <div className="max-w-2xl mx-auto px-4 h-14 flex items-center gap-3">
           <button onClick={() => step === 1 ? navigate(-1) : goPrev()} className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-ieumCream transition-colors">
             <i className="fa-solid fa-chevron-left text-ieumDark"></i>
           </button>
@@ -150,7 +150,7 @@ const FormContestA: React.FC = () => {
         </div>
       </header>
 
-      <div className="max-w-lg mx-auto px-4 py-6 pb-32">
+      <div className="max-w-2xl mx-auto px-4 py-6 pb-32">
 
         {/* step indicator */}
         <div className="flex items-center justify-center gap-2 mb-6">
@@ -172,7 +172,7 @@ const FormContestA: React.FC = () => {
           <div>
             <h2 className="text-xl font-bold text-ieumDark mb-1">참여 분야를 선택해주세요</h2>
             <p className="text-sm text-ieumMuted mb-6 leading-relaxed">세 가지 트랙 중 아이디어에 맞는 분야를 골라주세요.</p>
-            <div className="flex flex-col gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {TRACKS.map(t => (
                 <button
                   key={t.id}
@@ -201,18 +201,22 @@ const FormContestA: React.FC = () => {
             <h2 className="text-xl font-bold text-ieumDark mb-1">신청자 정보를 입력해주세요</h2>
             <p className="text-sm text-ieumMuted mb-6">수집된 정보는 공모전 운영 목적으로만 사용됩니다.</p>
             <div className="flex flex-col gap-4">
-              <Field label="이름" required>
-                <input type="text" value={personal.name} onChange={e => setP('name', e.target.value)} placeholder="홍길동" className="form-input" />
-              </Field>
-              <Field label="나이" required>
-                <input type="number" value={personal.age} onChange={e => setP('age', e.target.value)} placeholder="24" className="form-input w-28" />
-              </Field>
-              <Field label="전화번호" required>
-                <input type="tel" value={personal.phone} onChange={e => setP('phone', e.target.value)} placeholder="01012345678" className="form-input" />
-              </Field>
-              <Field label="이메일" required>
-                <input type="email" value={personal.email} onChange={e => setP('email', e.target.value)} placeholder="example@email.com" className="form-input" />
-              </Field>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Field label="이름" required>
+                  <input type="text" value={personal.name} onChange={e => setP('name', e.target.value)} placeholder="홍길동" className="form-input" />
+                </Field>
+                <Field label="나이" required>
+                  <input type="number" value={personal.age} onChange={e => setP('age', e.target.value)} placeholder="24" className="form-input" />
+                </Field>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Field label="전화번호" required>
+                  <input type="tel" value={personal.phone} onChange={e => setP('phone', e.target.value)} placeholder="01012345678" className="form-input" />
+                </Field>
+                <Field label="이메일" required>
+                  <input type="email" value={personal.email} onChange={e => setP('email', e.target.value)} placeholder="example@email.com" className="form-input" />
+                </Field>
+              </div>
               <Field label="거주 지역" required>
                 <RadioGroup options={REGIONS} value={personal.region} onChange={v => setP('region', v)} />
               </Field>
@@ -339,7 +343,7 @@ const FormContestA: React.FC = () => {
 
       {/* bottom CTA */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-ieumBorder px-4 py-4 shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
-        <div className="max-w-lg mx-auto">
+        <div className="max-w-2xl mx-auto">
           {step < 4 ? (
             <button onClick={goNext} className="w-full bg-ieumOrange text-white font-bold py-4 rounded-2xl text-base hover:bg-ieumGold transition-colors">
               다음 단계로

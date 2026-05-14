@@ -108,7 +108,7 @@ const FormContestB: React.FC = () => {
     <div className="min-h-screen" style={{ background: '#F9F6EE', fontFamily: "'Pretendard', 'Noto Sans KR', sans-serif" }}>
       {/* header */}
       <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
-        <div className="max-w-lg mx-auto px-4 h-14 flex items-center gap-3">
+        <div className="max-w-2xl mx-auto px-4 h-14 flex items-center gap-3">
           <button onClick={() => step === 1 ? navigate(-1) : goPrev()} className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors">
             <i className="fa-solid fa-chevron-left" style={{ color: NAVY }}></i>
           </button>
@@ -123,7 +123,7 @@ const FormContestB: React.FC = () => {
         </div>
       </header>
 
-      <div className="max-w-lg mx-auto px-4 py-6 pb-32">
+      <div className="max-w-2xl mx-auto px-4 py-6 pb-32">
 
         {/* step dots */}
         <div className="flex items-center justify-center gap-2 mb-6">
@@ -210,14 +210,20 @@ const FormContestB: React.FC = () => {
             <h2 className="text-xl font-bold mb-1" style={{ color: NAVY }}>신청자 정보를 입력해주세요</h2>
             <p className="text-sm text-gray-400 mb-6">수집된 정보는 공모전 운영 목적으로만 사용됩니다.</p>
             <div className="flex flex-col gap-4">
-              <Field label="이름" required><input type="text" value={personal.name} onChange={e => setP('name', e.target.value)} placeholder="홍길동" className="form-input-b" /></Field>
-              <Field label="나이" required><input type="number" value={personal.age} onChange={e => setP('age', e.target.value)} placeholder="24" className="form-input-b w-28" /></Field>
-              <Field label="전화번호" required><input type="tel" value={personal.phone} onChange={e => setP('phone', e.target.value)} placeholder="01012345678" className="form-input-b" /></Field>
-              <Field label="이메일" required><input type="email" value={personal.email} onChange={e => setP('email', e.target.value)} placeholder="example@email.com" className="form-input-b" /></Field>
-              <Field label="거주 지역" required><RadioGroupB options={REGIONS} value={personal.region} onChange={v => setP('region', v)} navy={NAVY} /></Field>
-              <Field label="세부 주소" required>
-                <input type="text" value={personal.addressDetail} onChange={e => setP('addressDetail', e.target.value)} placeholder="ex) 서울 관악구 신림동" className="form-input-b" />
-              </Field>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Field label="이름" required><input type="text" value={personal.name} onChange={e => setP('name', e.target.value)} placeholder="홍길동" className="form-input-b" /></Field>
+                <Field label="나이" required><input type="number" value={personal.age} onChange={e => setP('age', e.target.value)} placeholder="24" className="form-input-b" /></Field>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Field label="전화번호" required><input type="tel" value={personal.phone} onChange={e => setP('phone', e.target.value)} placeholder="01012345678" className="form-input-b" /></Field>
+                <Field label="이메일" required><input type="email" value={personal.email} onChange={e => setP('email', e.target.value)} placeholder="example@email.com" className="form-input-b" /></Field>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Field label="거주 지역" required><RadioGroupB options={REGIONS} value={personal.region} onChange={v => setP('region', v)} navy={NAVY} /></Field>
+                <Field label="세부 주소" required>
+                  <input type="text" value={personal.addressDetail} onChange={e => setP('addressDetail', e.target.value)} placeholder="ex) 서울 관악구 신림동" className="form-input-b" />
+                </Field>
+              </div>
               <Field label="소속 / 직업" required><RadioGroupB options={JOBS} value={personal.job} onChange={v => setP('job', v)} cols={2} navy={NAVY} /></Field>
               <Field label="신청 경로" required><RadioGroupB options={REFERRALS} value={personal.referral} onChange={v => setP('referral', v)} cols={2} navy={NAVY} /></Field>
               <div className="bg-gray-50 border border-gray-100 rounded-xl p-4 text-xs text-gray-400 leading-relaxed">
@@ -334,7 +340,7 @@ const FormContestB: React.FC = () => {
 
       {/* bottom CTA */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-4 py-4 shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
-        <div className="max-w-lg mx-auto">
+        <div className="max-w-2xl mx-auto">
           {step < 4 ? (
             <button onClick={goNext} className="w-full text-white font-bold py-4 rounded-2xl text-base transition-opacity hover:opacity-90" style={{ background: NAVY }}>
               다음 단계로 <i className="fa-solid fa-arrow-right ml-2 text-sm"></i>
