@@ -94,6 +94,9 @@ const FormContestC: React.FC = () => {
         pledge_agreed: idea.pledgeAgreed, receipt_number: num,
       });
     } catch (_) { /* fail silently */ }
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'form_complete', { form_name: 'contest_c' });
+    }
     setReceiptNum(num);
     setSubmitted(true);
     setSubmitting(false);

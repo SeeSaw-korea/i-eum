@@ -234,6 +234,9 @@ const TypeTest625: React.FC<TypeTest625Props> = ({ variant = 'A', basePath = '/6
         result: resultLabel, variant,
       });
     } catch (_) { /* fail silently */ }
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'form_complete', { form_name: 'test_625' });
+    }
     setSignCount(p => p + 1);
     setSubmitted(true);
     setTimeout(() => {

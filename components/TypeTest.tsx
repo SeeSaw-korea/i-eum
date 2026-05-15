@@ -231,6 +231,9 @@ const TypeTest: React.FC<TypeTestProps> = ({ variant = 'A' }) => {
         variant,
       });
     } catch (_) { /* fail silently */ }
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'form_complete', { form_name: `survival_${variant.toLowerCase()}` });
+    }
     setSignCount(prev => prev + 1);
     setSubmitted(true);
     setTimeout(() => {

@@ -104,6 +104,9 @@ const FormContestA: React.FC = () => {
         receipt_number: num,
       });
     } catch (_) { /* fail silently */ }
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'form_complete', { form_name: 'contest_a' });
+    }
     setReceiptNum(num);
     setSubmitted(true);
     setSubmitting(false);
