@@ -230,7 +230,7 @@ const TypeTest625: React.FC<TypeTest625Props> = ({ variant = 'A', basePath = '/6
     try {
       await supabase.from('AD-ieum-625').insert({
         name: formData.name, birth: formData.age, phone: formData.phone,
-        region: formData.region, city: formData.city, job_status: formData.jobStatus,
+        residence: formData.region, city: formData.city, job_status: formData.jobStatus,
         result: resultLabel, variant,
       });
     } catch (_) { /* fail silently */ }
