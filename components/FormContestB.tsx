@@ -65,8 +65,8 @@ const FormContestB: React.FC = () => {
     const num = `CB-${Date.now().toString().slice(-6)}`;
     try {
       await supabase.from('AD-ieum-contest-b').insert({
-        name: personal.name, age: personal.age, phone: personal.phone, email: personal.email,
-        region: personal.region, address_detail: personal.addressDetail,
+        name: personal.name, birth: personal.age, phone: personal.phone, email: personal.email,
+        residence: personal.region, address_detail: personal.addressDetail,
         job: personal.job === '기타' && personal.jobOther ? `기타(${personal.jobOther})` : personal.job,
         referral: personal.referral,
         q1: idea.q1,

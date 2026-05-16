@@ -87,8 +87,8 @@ const FormContestC: React.FC = () => {
     } catch (_) { /* storage not configured yet */ }
     try {
       await supabase.from('AD-ieum-contest-c').insert({
-        name: personal.name, age: personal.age, phone: personal.phone, email: personal.email,
-        region: personal.region, address_detail: personal.addressDetail, job: personal.job, referral: personal.referral,
+        name: personal.name, birth: personal.age, phone: personal.phone, email: personal.email,
+        residence: personal.region, address_detail: personal.addressDetail, job: personal.job, referral: personal.referral,
         q1: idea.q1, q2: idea.q2, design_image_url: designImageUrl,
         q3: idea.q3, q4: idea.q4,
         pledge_agreed: idea.pledgeAgreed, receipt_number: num,
