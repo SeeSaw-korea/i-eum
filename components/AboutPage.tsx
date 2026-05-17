@@ -183,21 +183,20 @@ const Intro: React.FC = () => (
           </h2>
           <p className="text-ieumDark text-sm leading-[2] mb-4">
             2023년, 청년들의 고립과 사회 단절이라는 문제를 직접 목격한 청년들이 모여
-            <strong className="text-ieumNavy"> 씨소(SeeSaw)</strong>를 설립했습니다.
+            <strong className="text-ieumOrange">이음(IEUM)</strong>을 설립했습니다.
             "청년의 불안과 감정이 사회 구조와 얼마나 연결되어 있는가"라는 질문에서 출발해,
             단순한 커뮤니티를 넘어 <strong className="text-ieumOrange">참여 구조</strong>를 만드는 단체로 성장했습니다.
           </p>
           <p className="text-ieumDark text-sm leading-[2]">
-            2025년 5월, '이어짐'의 가치를 더 선명하게 담아 <strong className="text-ieumOrange">이음(IEUM)</strong>으로
-            리브랜딩했습니다. 청년이 감정에서 출발해 사회와 연결되고,
-            행동으로 변화를 만드는 선순환 구조를 지속적으로 구축해나가고 있습니다.
+            '이어짐'이라는 이름처럼, 이음은 청년이 감정에서 출발해 사회와 연결되고,
+            행동으로 변화를 만드는 선순환 구조를 창립 때부터 지금까지 일관되게 구축해나가고 있습니다.
           </p>
         </div>
         <div className="mt-8 md:mt-0 space-y-3">
           {[
-            { year: '2023', event: '씨소(SeeSaw) 설립 — 청년 참여 구조의 첫걸음' },
+            { year: '2023', event: '이음(IEUM) 설립 — 청년 참여 구조의 첫걸음' },
             { year: '2024', event: '캠페인·세미나 정례화 — 연간 참여자 1,200명 달성' },
-            { year: '2025', event: '이음(IEUM) 리브랜딩 — 청년 연결 플랫폼으로 확장' },
+            { year: '2025', event: '청년 연결 플랫폼 본격화 — 누적 참여자 2,800명 돌파' },
           ].map((item, i) => (
             <div key={i} className="flex gap-4 items-start bg-ieumCream border border-ieumBorder rounded-xl p-4">
               <span className="text-ieumOrange font-black text-sm flex-shrink-0 mt-0.5">{item.year}</span>
@@ -414,7 +413,7 @@ const History: React.FC = () => {
       year: '2025',
       color: 'text-ieumOrange',
       items: [
-        { month: '05', event: 'IEUM(이음)으로 공식 리브랜딩', detail: '2년간의 활동을 바탕으로 "이어짐"의 가치를 담아 이음(IEUM)으로 브랜드 전환. 새 웹사이트 런칭.', highlight: true },
+        { month: '05', event: '참전용사·사회연결 공모전 시리즈 본격 론칭', detail: '참전용사 처우개선·굿즈 디자인 등 사회 의제 기반 공모전 시리즈 시작. 전국 청년 참여 확대.', highlight: true },
         { month: '04', event: '청년 유형 테스트 A/B 캠페인 런칭', detail: '청년 생존 유형 테스트를 통한 사회참여 캠페인. 서명 참여자 8,400명 돌파.' },
         { month: '03', event: '청년민원24 프로젝트 론칭', detail: '청년의 사회 문제를 정책으로 연결하는 디지털 민원 플랫폼 오픈. Supabase 기반 실시간 데이터 수집.' },
         { month: '02', event: '누적 참여 청년 2,800명 돌파', detail: '설립 2년 만에 2,800명 참여 달성. 서울·경기·부산 등 전국 8개 지역 청년 참여.' },
@@ -443,7 +442,7 @@ const History: React.FC = () => {
         { month: '07', event: '첫 번째 여름 캠페인 운영', detail: '오프라인 캠페인 행사 첫 개최. 참여 청년 230명, 서울 홍대·연남동 일대 진행.' },
         { month: '06', event: '첫 번째 청년 기획 프로젝트 시작', detail: '5개 팀, 24명의 청년이 직접 기획한 사회참여 프로젝트 1기 시작.' },
         { month: '04', event: '카카오채널 개설 및 커뮤니티 첫 운영', detail: '온라인 커뮤니티 첫 개설. 첫 달 200명 가입. 격주 뉴스레터 발행 시작.' },
-        { month: '03', event: 'SEESAW(시소) 설립 — 청년 참여 구조의 시작', detail: '청년사회단체 씨소 공식 창립. 창립 멤버 12명, 서울 마포구 사무실 개설.', highlight: true },
+        { month: '03', event: '이음(IEUM) 설립 — 청년 참여 구조의 시작', detail: '청년사회단체 이음 공식 창립. 창립 멤버 12명, 서울 마포구 사무실 개설.', highlight: true },
       ],
     },
   ];
@@ -457,7 +456,7 @@ const History: React.FC = () => {
         <div className="max-w-5xl mx-auto relative z-10">
           <span className="text-ieumOrange text-xs font-bold uppercase tracking-widest">History</span>
           <h1 className="text-white text-3xl md:text-4xl font-black mt-2">연혁</h1>
-          <p className="text-white/50 text-sm mt-3 max-w-lg">2023년 창립부터 현재까지, 청년과 함께 걸어온 이음의 발자국</p>
+          <p className="text-white/50 text-sm mt-3 max-w-lg">2023년 이음(IEUM) 창립부터 현재까지, 청년과 함께 걸어온 발자국</p>
         </div>
       </div>
 
