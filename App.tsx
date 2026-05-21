@@ -184,6 +184,7 @@ const App: React.FC = () => {
     location.pathname === '/contest-b' ||
     location.pathname === '/contest-c' ||
     location.pathname === '/random-box' ||
+    location.pathname === '/events' ||
     location.pathname === '/survival-a' ||
     location.pathname === '/survival-b' ||
     location.pathname.startsWith('/625-test') ||
@@ -324,6 +325,7 @@ const App: React.FC = () => {
           <Route path="/contest-b" element={<FormContestB />} />
           <Route path="/contest-c" element={<FormContestC />} />
           <Route path="/random-box" element={<ProjectRandomBox />} />
+          <Route path="/events" element={<ProjectRandomBox />} />
           <Route path="/survival-a" element={<TypeTest variant="A" />} />
           <Route path="/survival-b" element={<TypeTest variant="B" />} />
           <Route path="/625-test/*" element={<TypeTest625 variant="A" basePath="/625-test" />} />
