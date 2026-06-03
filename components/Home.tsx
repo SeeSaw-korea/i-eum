@@ -1,5 +1,5 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Category, AppState } from '../types';
 import { useContents } from '../hooks/useContents';
 import Card from './Card';
@@ -16,26 +16,6 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
   const navigate = useNavigate();
   const { contents, loading, error } = useContents();
   const [statsTab, setStatsTab] = useState<'all' | 'project' | 'seminar' | 'campaign' | 'interview' | 'live'>('all');
-  const [splineKey, setSplineKey] = useState(0);
-  const splineContainerRef = useRef<HTMLDivElement>(null);
-  const splineWasHidden = useRef(false);
-
-  useEffect(() => {
-    const el = splineContainerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          splineWasHidden.current = true;
-        } else if (splineWasHidden.current) {
-          splineWasHidden.current = false;
-          setSplineKey((k) => k + 1);
-        }
-      });
-    }, { threshold: 0 });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
 
   if (loading) {
     return (
@@ -208,22 +188,25 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
               </div>
             </div>
 
-            {/* Right: Spline */}
+            {/* Right: Brand panel */}
             <div
-              ref={splineContainerRef}
-              className="relative w-full h-[260px] md:h-[440px] rounded-3xl overflow-hidden"
-              style={{ willChange: 'transform', transform: 'translateZ(0)' }}
+              className="relative w-full h-[260px] md:h-[440px] rounded-3xl overflow-hidden flex flex-col items-center justify-center select-none"
+              style={{ backgroundColor: '#4D6B43' }}
             >
-              {/* @ts-ignore */}
-              <spline-viewer
-                key={splineKey}
-                url="https://prod.spline.design/FvqIaXwDkGTrtBYv/scene.splinecode"
-                style={{ width: '100%', height: '100%', display: 'block' }}
-              />
-              <div
-                className="absolute bottom-0 left-0 right-0 pointer-events-none"
-                style={{ height: '56px', backgroundColor: '#F0F4EC', zIndex: 9999 }}
-              />
+              {/* Atmospheric depth */}
+              <div className="absolute inset-0 pointer-events-none"
+                   style={{ background: 'radial-gradient(ellipse at 25% 75%, rgba(255,255,255,0.07) 0%, transparent 55%), radial-gradient(ellipse at 75% 20%, rgba(0,0,0,0.2) 0%, transparent 50%)' }} />
+              {/* Subtle grain */}
+              <div className="absolute inset-0 opacity-[0.04]"
+                   style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`, backgroundSize: '256px 256px' }} />
+
+              <div className="relative z-10 flex flex-col items-center gap-5">
+                <IeumLogo height={68} color="white" />
+                <div className="w-14 h-px" style={{ backgroundColor: 'rgba(255,255,255,0.22)' }} />
+                <p className="text-white/50 text-[11px] tracking-[0.3em] uppercase font-light">Youth &amp; Society</p>
+              </div>
+
+              <p className="absolute bottom-5 right-6 text-white/15 text-[10px] font-semibold tracking-widest uppercase">Since 2023</p>
             </div>
           </div>
         </div>
@@ -692,50 +675,88 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
 
       {/* ━━━━━ 11. FOOTER ━━━━━ */}
       <footer className="bg-ieumNavy text-white">
-        <div className="max-w-5xl mx-auto px-5 py-12 md:py-14">
-          <div className="md:flex md:justify-between md:items-start">
-            <div className="mb-8 md:mb-0">
-              <IeumLogo height={36} color="white" className="mb-4" />
-              <p className="text-white/50 text-xs leading-relaxed mb-2">
+        {/* Top bar */}
+        <div className="max-w-5xl mx-auto px-5 pt-12 md:pt-16 pb-10 border-b border-white/10">
+          <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-10 md:gap-16">
+
+            {/* Logo + mission */}
+            <div className="md:max-w-[220px]">
+              <IeumLogo height={32} color="white" className="mb-4" />
+              <p className="text-white/45 text-xs leading-relaxed">
                 청년 참여 구조, IEUM<br />
-                감정에서 출발해 사회와 연결되고, 행동으로 변화를 만드는 청년들
+                감정에서 출발해 사회와 연결되고,<br />
+                행동으로 변화를 만드는 청년들
               </p>
-              <p className="text-white/30 text-[11px]">© 2025 IEUM. All rights reserved.</p>
+              <button
+                onClick={() => window.open('https://pf.kakao.com/_dxlLCX/friend', '_blank')}
+                className="mt-5 inline-flex items-center gap-2 text-[11px] font-bold px-3.5 py-2 rounded-lg transition-opacity hover:opacity-80"
+                style={{ backgroundColor: '#FEE500', color: '#3C1E1E' }}
+              >
+                <i className="fa-solid fa-comment"></i>
+                카카오채널 문의
+              </button>
             </div>
-            <div className="flex flex-col gap-6 md:flex-row md:gap-16">
+
+            {/* Nav links */}
+            <div className="flex gap-10 md:gap-14">
               <div>
-                <p className="text-white text-xs font-bold mb-3">활동</p>
-                <div className="flex flex-col gap-2">
-                  {[
-                    ['프로젝트', '/category/projects'],
-                    ['세미나', '/category/seminars'],
-                    ['캠페인', '/category/campaigns'],
-                    ['인터뷰', '/category/interviews'],
-                  ].map(([label, path]) => (
-                    <button
-                      key={path}
-                      onClick={() => navigate(path)}
-                      className="text-white/50 text-xs text-left hover:text-white transition-colors"
-                    >
-                      {label}
-                    </button>
+                <p className="text-white/80 text-[11px] font-bold mb-3.5 uppercase tracking-widest">활동</p>
+                <div className="flex flex-col gap-2.5">
+                  {[['프로젝트', '/category/projects'],['세미나', '/category/seminars'],['캠페인', '/category/campaigns'],['인터뷰', '/category/interviews']].map(([label, path]) => (
+                    <button key={path} onClick={() => navigate(path)} className="text-white/45 text-xs text-left hover:text-white transition-colors">{label}</button>
                   ))}
                 </div>
               </div>
               <div>
-                <p className="text-white text-xs font-bold mb-3">이음</p>
-                <div className="flex flex-col gap-2">
-                  {[['소개', '/more'], ['인사이트', '/category/insights']].map(([label, path]) => (
-                    <button
-                      key={path}
-                      onClick={() => navigate(path)}
-                      className="text-white/50 text-xs text-left hover:text-white transition-colors"
-                    >
-                      {label}
-                    </button>
+                <p className="text-white/80 text-[11px] font-bold mb-3.5 uppercase tracking-widest">이음</p>
+                <div className="flex flex-col gap-2.5">
+                  {[['인사말', '/about/greeting'],['IEUM 소개', '/about/intro'],['연혁', '/about/history'],['조직도', '/about/organization']].map(([label, path]) => (
+                    <button key={path} onClick={() => navigate(path)} className="text-white/45 text-xs text-left hover:text-white transition-colors">{label}</button>
                   ))}
                 </div>
               </div>
+              <div>
+                <p className="text-white/80 text-[11px] font-bold mb-3.5 uppercase tracking-widest">소식</p>
+                <div className="flex flex-col gap-2.5">
+                  {[['에세이/칼럼', '/category/essays'],['인사이트', '/category/insights']].map(([label, path]) => (
+                    <button key={path} onClick={() => navigate(path)} className="text-white/45 text-xs text-left hover:text-white transition-colors">{label}</button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Contact */}
+            <div className="flex flex-col gap-3">
+              <p className="text-white/80 text-[11px] font-bold mb-0.5 uppercase tracking-widest">Contact</p>
+              <a href="mailto:hello@reallygreatsite.com" className="flex items-center gap-2 text-white/45 text-xs hover:text-white transition-colors">
+                <i className="fa-solid fa-envelope w-3.5 text-center flex-shrink-0"></i>
+                hello@reallygreatsite.com
+              </a>
+              <div className="flex items-start gap-2 text-white/45 text-xs">
+                <i className="fa-solid fa-location-dot w-3.5 text-center flex-shrink-0 mt-0.5"></i>
+                <span>서울특별시 마포구<br />독막로 76-1 2층</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Legal info */}
+        <div className="max-w-5xl mx-auto px-5 py-5 pb-28 md:pb-5">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-white/25 leading-relaxed">
+              <span>대표자 이찬영</span>
+              <span className="text-white/15">·</span>
+              <span>사업자등록번호 289-67-00756</span>
+              <span className="text-white/15">·</span>
+              <span>서울특별시 마포구 독막로 76-1 2층</span>
+            </div>
+            <div className="flex items-center gap-3 text-[11px] text-white/25 flex-wrap">
+              <button className="hover:text-white/60 transition-colors">개인정보처리방침</button>
+              <span className="text-white/15">|</span>
+              <button className="hover:text-white/60 transition-colors">이용약관</button>
+              <span className="text-white/15">|</span>
+              <span>© 2025 IEUM. All rights reserved.</span>
             </div>
           </div>
         </div>

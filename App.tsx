@@ -205,7 +205,7 @@ const App: React.FC = () => {
 
             {/* 로고 */}
             <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
-              <IeumLogo height={36} color="#1A2B16" />
+              <IeumLogo height={36} color="#1A2B16" outline={true} />
             </div>
 
             {/* 데스크탑 드롭다운 네비 */}

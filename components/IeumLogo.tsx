@@ -5,9 +5,10 @@ interface IeumLogoProps {
   className?: string;
   color?: string;
   height?: number;
+  outline?: boolean;
 }
 
-const IeumLogo: React.FC<IeumLogoProps> = ({ className = '', color = '#1A2B16', height = 40 }) => {
+const IeumLogo: React.FC<IeumLogoProps> = ({ className = '', color = '#1A2B16', height = 40, outline = false }) => {
   const vW = 148;
   const vH = 46;
   const w = height * (vW / vH);
@@ -30,12 +31,15 @@ const IeumLogo: React.FC<IeumLogoProps> = ({ className = '', color = '#1A2B16', 
         fontWeight="300"
         fontSize="32"
         letterSpacing="-1.4"
-        fill={color}
+        fill={outline ? 'none' : color}
+        stroke={outline ? color : 'none'}
+        strokeWidth={outline ? '0.85' : '0'}
+        strokeLinejoin="round"
       >
         ieum
       </text>
-      {/* Signature horizontal crossbar — the brand mark */}
-      <rect x="0" y="29" width={vW} height="2" rx="1" fill={color} />
+      {/* Signature horizontal crossbar */}
+      <rect x="0" y="29" width={vW} height={outline ? 1.5 : 2} rx="1" fill={color} />
     </svg>
   );
 };
