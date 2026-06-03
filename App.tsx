@@ -212,7 +212,7 @@ const App: React.FC = () => {
               <img
                 src={`${import.meta.env.BASE_URL}ieum-logo-outline.png`}
                 alt="IEUM Logo"
-                className="h-9 w-auto object-contain"
+                className="h-12 w-auto object-contain"
                 style={{ filter: 'invert(1)' }}
                 onError={(e) => {
                   const t = e.currentTarget;
