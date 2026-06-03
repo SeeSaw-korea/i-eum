@@ -189,24 +189,32 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
             </div>
 
             {/* Right: Brand panel */}
-            <div
-              className="relative w-full h-[260px] md:h-[440px] rounded-3xl overflow-hidden flex flex-col items-center justify-center select-none"
-              style={{ backgroundColor: '#4D6B43' }}
-            >
-              {/* Atmospheric depth */}
-              <div className="absolute inset-0 pointer-events-none"
-                   style={{ background: 'radial-gradient(ellipse at 25% 75%, rgba(255,255,255,0.07) 0%, transparent 55%), radial-gradient(ellipse at 75% 20%, rgba(0,0,0,0.2) 0%, transparent 50%)' }} />
-              {/* Subtle grain */}
-              <div className="absolute inset-0 opacity-[0.04]"
-                   style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`, backgroundSize: '256px 256px' }} />
-
-              <div className="relative z-10 flex flex-col items-center gap-5">
-                <IeumLogo height={68} color="white" />
-                <div className="w-14 h-px" style={{ backgroundColor: 'rgba(255,255,255,0.22)' }} />
-                <p className="text-white/50 text-[11px] tracking-[0.3em] uppercase font-light">Youth &amp; Society</p>
+            <div className="relative w-full h-[260px] md:h-[440px] rounded-3xl overflow-hidden select-none">
+              {/* 실제 브랜드 이미지 */}
+              <img
+                src={`${import.meta.env.BASE_URL}ieum-brand.png`}
+                alt="IEUM YOUTH & SOCIETY"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  const fallback = e.currentTarget.nextElementSibling as HTMLElement;
+                  if (fallback) fallback.style.display = 'flex';
+                }}
+              />
+              {/* Fallback (이미지 없을 때) */}
+              <div
+                className="absolute inset-0 hidden flex-col items-center justify-center"
+                style={{ backgroundColor: '#4D6B43' }}
+              >
+                <div className="absolute inset-0 pointer-events-none"
+                     style={{ background: 'radial-gradient(ellipse at 25% 75%, rgba(255,255,255,0.07) 0%, transparent 55%), radial-gradient(ellipse at 75% 20%, rgba(0,0,0,0.2) 0%, transparent 50%)' }} />
+                <div className="relative z-10 flex flex-col items-center gap-5">
+                  <IeumLogo height={68} color="white" />
+                  <div className="w-14 h-px" style={{ backgroundColor: 'rgba(255,255,255,0.22)' }} />
+                  <p className="text-white/50 text-[11px] tracking-[0.3em] uppercase font-light">Youth &amp; Society</p>
+                </div>
+                <p className="absolute bottom-5 right-6 text-white/15 text-[10px] font-semibold tracking-widest uppercase">Since 2023</p>
               </div>
-
-              <p className="absolute bottom-5 right-6 text-white/15 text-[10px] font-semibold tracking-widest uppercase">Since 2023</p>
             </div>
           </div>
         </div>
@@ -752,9 +760,9 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
               <span>서울특별시 마포구 독막로 76-1 2층</span>
             </div>
             <div className="flex items-center gap-3 text-[11px] text-white/25 flex-wrap">
-              <button className="hover:text-white/60 transition-colors">개인정보처리방침</button>
+              <button onClick={() => navigate('/privacy')} className="hover:text-white/60 transition-colors">개인정보처리방침</button>
               <span className="text-white/15">|</span>
-              <button className="hover:text-white/60 transition-colors">이용약관</button>
+              <button onClick={() => navigate('/terms')} className="hover:text-white/60 transition-colors">이용약관</button>
               <span className="text-white/15">|</span>
               <span>© 2025 IEUM. All rights reserved.</span>
             </div>

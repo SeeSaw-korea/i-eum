@@ -26,6 +26,8 @@ import TypeTest625 from './components/TypeTest625';
 import ProjectMinwon from './components/ProjectMinwon';
 import AboutPage from './components/AboutPage';
 import IeumLogo from './components/IeumLogo';
+import PrivacyPage from './components/PrivacyPage';
+import TermsPage from './components/TermsPage';
 
 /* ── 드롭다운 메뉴 정의 ── */
 const NAV_ITEMS = [
@@ -191,7 +193,9 @@ const App: React.FC = () => {
     location.pathname.startsWith('/625-test') ||
     location.pathname.startsWith('/project-minwon') ||
     location.pathname === '/login' ||
-    location.pathname === '/signup';
+    location.pathname === '/signup' ||
+    location.pathname === '/privacy' ||
+    location.pathname === '/terms';
 
   if (location.pathname === '/login' || location.pathname === '/signup') {
     return <Onboarding onComplete={handleOnboardingComplete} />;
@@ -205,7 +209,21 @@ const App: React.FC = () => {
 
             {/* 로고 */}
             <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
-              <IeumLogo height={36} color="#1A2B16" outline={true} />
+              <img
+                src={`${import.meta.env.BASE_URL}ieum-logo-outline.png`}
+                alt="IEUM Logo"
+                className="h-9 w-auto object-contain"
+                style={{ filter: 'invert(1)' }}
+                onError={(e) => {
+                  const t = e.currentTarget;
+                  t.style.display = 'none';
+                  const svg = t.nextElementSibling as HTMLElement;
+                  if (svg) svg.style.display = 'block';
+                }}
+              />
+              <span style={{ display: 'none' }}>
+                <IeumLogo height={36} color="#1A2B16" outline={true} />
+              </span>
             </div>
 
             {/* 데스크탑 드롭다운 네비 */}
@@ -334,6 +352,8 @@ const App: React.FC = () => {
           <Route path="/625-test-b/*" element={<TypeTest625 variant="B" basePath="/625-test-b" />} />
           <Route path="/project-minwon" element={<ProjectMinwonWrapper />} />
           <Route path="/more" element={<MorePage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
