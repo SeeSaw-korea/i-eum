@@ -4,6 +4,7 @@ import { Category, AppState } from '../types';
 import { useContents } from '../hooks/useContents';
 import Card from './Card';
 import { useNavigate } from 'react-router-dom';
+import IeumLogo from './IeumLogo';
 
 interface HomeProps {
   appState: AppState;
@@ -156,7 +157,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
         {/* ambient glow */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -top-40 -right-40 w-[700px] h-[700px] rounded-full"
-               style={{background:'radial-gradient(circle, rgba(255,107,0,0.14) 0%, transparent 65%)'}} />
+               style={{background:'radial-gradient(circle, rgba(90,155,71,0.18) 0%, transparent 65%)'}} />
           <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full"
                style={{background:'radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)'}} />
         </div>
@@ -221,14 +222,14 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
               />
               <div
                 className="absolute bottom-0 left-0 right-0 pointer-events-none"
-                style={{ height: '56px', backgroundColor: '#F8F5F1', zIndex: 9999 }}
+                style={{ height: '56px', backgroundColor: '#F0F4EC', zIndex: 9999 }}
               />
             </div>
           </div>
         </div>
 
         {/* marquee ticker */}
-        <div className="border-t border-white/10 overflow-hidden py-3" style={{backgroundColor:'rgba(255,107,0,0.12)'}}>
+        <div className="border-t border-white/10 overflow-hidden py-3" style={{backgroundColor:'rgba(90,155,71,0.15)'}}>
           <div className="flex marquee-scroll whitespace-nowrap">
             {[0, 1].map((di) => (
               <div key={di} className="flex items-center">
@@ -341,7 +342,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
               <div key={idx}
                    className="group bg-white rounded-3xl p-7 border border-ieumBorder hover:border-ieumOrange/50 hover:shadow-xl transition-all duration-300">
                 <div className="text-5xl font-black mb-4 leading-none"
-                     style={{color:'rgba(26,43,74,0.07)'}}>
+                     style={{color:'rgba(28,48,24,0.08)'}}>
                   0{idx + 1}
                 </div>
                 <div className="w-12 h-12 bg-ieumNavy rounded-2xl flex items-center justify-center mb-4 group-hover:bg-ieumOrange transition-colors duration-300">
@@ -694,11 +695,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
         <div className="max-w-5xl mx-auto px-5 py-12 md:py-14">
           <div className="md:flex md:justify-between md:items-start">
             <div className="mb-8 md:mb-0">
-              <img
-                src={`${import.meta.env.BASE_URL}ieum-logo.png`}
-                alt="IEUM"
-                className="h-10 w-auto object-contain brightness-0 invert mb-4"
-              />
+              <IeumLogo height={36} color="white" className="mb-4" />
               <p className="text-white/50 text-xs leading-relaxed mb-2">
                 청년 참여 구조, IEUM<br />
                 감정에서 출발해 사회와 연결되고, 행동으로 변화를 만드는 청년들

@@ -25,6 +25,7 @@ import TypeTest from './components/TypeTest';
 import TypeTest625 from './components/TypeTest625';
 import ProjectMinwon from './components/ProjectMinwon';
 import AboutPage from './components/AboutPage';
+import IeumLogo from './components/IeumLogo';
 
 /* ── 드롭다운 메뉴 정의 ── */
 const NAV_ITEMS = [
@@ -204,7 +205,7 @@ const App: React.FC = () => {
 
             {/* 로고 */}
             <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
-              <img src={`${import.meta.env.BASE_URL}ieum-logo.png`} alt="IEUM Logo" className="h-10 w-auto object-contain" />
+              <IeumLogo height={36} color="#1A2B16" />
             </div>
 
             {/* 데스크탑 드롭다운 네비 */}
