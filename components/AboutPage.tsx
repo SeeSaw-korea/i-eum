@@ -84,8 +84,8 @@ const Greeting: React.FC = () => (
               <i className="fa-solid fa-user text-white text-xl"></i>
             </div>
             <div>
-              <p className="text-ieumDark font-black text-base">이음(IEUM) 대표</p>
-              <p className="text-ieumMuted text-xs mt-0.5">청년 참여 구조, IEUM</p>
+              <p className="text-ieumDark font-black text-base">이찬영</p>
+              <p className="text-ieumMuted text-xs mt-0.5">이음(IEUM) 대표 · 청년 참여 구조, IEUM</p>
               <p className="text-ieumOrange text-xs font-semibold mt-1">2025년 봄</p>
             </div>
           </div>
@@ -569,8 +569,8 @@ const Organization: React.FC = () => (
             <i className="fa-solid fa-user text-white text-xl"></i>
           </div>
           <p className="text-ieumOrange text-[10px] font-bold uppercase tracking-widest mb-0.5">Representative</p>
-          <p className="text-white font-black text-base">대표</p>
-          <p className="text-white/50 text-xs mt-1">총괄 · 전략 수립 · 대외협력</p>
+          <p className="text-white font-black text-base">이찬영</p>
+          <p className="text-white/50 text-xs mt-1">대표 · 총괄 · 전략 수립 · 대외협력</p>
         </div>
       </div>
 

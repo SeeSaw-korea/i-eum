@@ -1,9 +1,10 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Category, AppState } from '../types';
 import { useContents } from '../hooks/useContents';
 import Card from './Card';
 import { useNavigate } from 'react-router-dom';
+import IeumLogo from './IeumLogo';
 
 interface HomeProps {
   appState: AppState;
@@ -15,26 +16,6 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
   const navigate = useNavigate();
   const { contents, loading, error } = useContents();
   const [statsTab, setStatsTab] = useState<'all' | 'project' | 'seminar' | 'campaign' | 'interview' | 'live'>('all');
-  const [splineKey, setSplineKey] = useState(0);
-  const splineContainerRef = useRef<HTMLDivElement>(null);
-  const splineWasHidden = useRef(false);
-
-  useEffect(() => {
-    const el = splineContainerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          splineWasHidden.current = true;
-        } else if (splineWasHidden.current) {
-          splineWasHidden.current = false;
-          setSplineKey((k) => k + 1);
-        }
-      });
-    }, { threshold: 0 });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
 
   if (loading) {
     return (
@@ -156,7 +137,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
         {/* ambient glow */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -top-40 -right-40 w-[700px] h-[700px] rounded-full"
-               style={{background:'radial-gradient(circle, rgba(255,107,0,0.14) 0%, transparent 65%)'}} />
+               style={{background:'radial-gradient(circle, rgba(90,155,71,0.18) 0%, transparent 65%)'}} />
           <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full"
                style={{background:'radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)'}} />
         </div>
@@ -207,28 +188,39 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
               </div>
             </div>
 
-            {/* Right: Spline */}
-            <div
-              ref={splineContainerRef}
-              className="relative w-full h-[260px] md:h-[440px] rounded-3xl overflow-hidden"
-              style={{ willChange: 'transform', transform: 'translateZ(0)' }}
-            >
-              {/* @ts-ignore */}
-              <spline-viewer
-                key={splineKey}
-                url="https://prod.spline.design/FvqIaXwDkGTrtBYv/scene.splinecode"
-                style={{ width: '100%', height: '100%', display: 'block' }}
+            {/* Right: Brand panel */}
+            <div className="relative w-full h-[260px] md:h-[440px] rounded-3xl overflow-hidden select-none">
+              {/* 실제 브랜드 이미지 */}
+              <img
+                src={`${import.meta.env.BASE_URL}ieum-brand.png`}
+                alt="IEUM YOUTH & SOCIETY"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  const fallback = e.currentTarget.nextElementSibling as HTMLElement;
+                  if (fallback) fallback.style.display = 'flex';
+                }}
               />
+              {/* Fallback (이미지 없을 때) */}
               <div
-                className="absolute bottom-0 left-0 right-0 pointer-events-none"
-                style={{ height: '56px', backgroundColor: '#F8F5F1', zIndex: 9999 }}
-              />
+                className="absolute inset-0 hidden flex-col items-center justify-center"
+                style={{ backgroundColor: '#4D6B43' }}
+              >
+                <div className="absolute inset-0 pointer-events-none"
+                     style={{ background: 'radial-gradient(ellipse at 25% 75%, rgba(255,255,255,0.07) 0%, transparent 55%), radial-gradient(ellipse at 75% 20%, rgba(0,0,0,0.2) 0%, transparent 50%)' }} />
+                <div className="relative z-10 flex flex-col items-center gap-5">
+                  <IeumLogo height={68} color="white" />
+                  <div className="w-14 h-px" style={{ backgroundColor: 'rgba(255,255,255,0.22)' }} />
+                  <p className="text-white/50 text-[11px] tracking-[0.3em] uppercase font-light">Youth &amp; Society</p>
+                </div>
+                <p className="absolute bottom-5 right-6 text-white/15 text-[10px] font-semibold tracking-widest uppercase">Since 2023</p>
+              </div>
             </div>
           </div>
         </div>
 
         {/* marquee ticker */}
-        <div className="border-t border-white/10 overflow-hidden py-3" style={{backgroundColor:'rgba(255,107,0,0.12)'}}>
+        <div className="border-t border-white/10 overflow-hidden py-3" style={{backgroundColor:'rgba(90,155,71,0.15)'}}>
           <div className="flex marquee-scroll whitespace-nowrap">
             {[0, 1].map((di) => (
               <div key={di} className="flex items-center">
@@ -341,7 +333,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
               <div key={idx}
                    className="group bg-white rounded-3xl p-7 border border-ieumBorder hover:border-ieumOrange/50 hover:shadow-xl transition-all duration-300">
                 <div className="text-5xl font-black mb-4 leading-none"
-                     style={{color:'rgba(26,43,74,0.07)'}}>
+                     style={{color:'rgba(28,48,24,0.08)'}}>
                   0{idx + 1}
                 </div>
                 <div className="w-12 h-12 bg-ieumNavy rounded-2xl flex items-center justify-center mb-4 group-hover:bg-ieumOrange transition-colors duration-300">
@@ -691,54 +683,88 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
 
       {/* ━━━━━ 11. FOOTER ━━━━━ */}
       <footer className="bg-ieumNavy text-white">
-        <div className="max-w-5xl mx-auto px-5 py-12 md:py-14">
-          <div className="md:flex md:justify-between md:items-start">
-            <div className="mb-8 md:mb-0">
-              <img
-                src={`${import.meta.env.BASE_URL}ieum-logo.png`}
-                alt="IEUM"
-                className="h-10 w-auto object-contain brightness-0 invert mb-4"
-              />
-              <p className="text-white/50 text-xs leading-relaxed mb-2">
+        {/* Top bar */}
+        <div className="max-w-5xl mx-auto px-5 pt-12 md:pt-16 pb-10 border-b border-white/10">
+          <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-10 md:gap-16">
+
+            {/* Logo + mission */}
+            <div className="md:max-w-[220px]">
+              <IeumLogo height={32} color="white" className="mb-4" />
+              <p className="text-white/45 text-xs leading-relaxed">
                 청년 참여 구조, IEUM<br />
-                감정에서 출발해 사회와 연결되고, 행동으로 변화를 만드는 청년들
+                감정에서 출발해 사회와 연결되고,<br />
+                행동으로 변화를 만드는 청년들
               </p>
-              <p className="text-white/30 text-[11px]">© 2025 IEUM. All rights reserved.</p>
+              <button
+                onClick={() => window.open('https://pf.kakao.com/_dxlLCX/friend', '_blank')}
+                className="mt-5 inline-flex items-center gap-2 text-[11px] font-bold px-3.5 py-2 rounded-lg transition-opacity hover:opacity-80"
+                style={{ backgroundColor: '#FEE500', color: '#3C1E1E' }}
+              >
+                <i className="fa-solid fa-comment"></i>
+                카카오채널 문의
+              </button>
             </div>
-            <div className="flex flex-col gap-6 md:flex-row md:gap-16">
+
+            {/* Nav links */}
+            <div className="flex gap-10 md:gap-14">
               <div>
-                <p className="text-white text-xs font-bold mb-3">활동</p>
-                <div className="flex flex-col gap-2">
-                  {[
-                    ['프로젝트', '/category/projects'],
-                    ['세미나', '/category/seminars'],
-                    ['캠페인', '/category/campaigns'],
-                    ['인터뷰', '/category/interviews'],
-                  ].map(([label, path]) => (
-                    <button
-                      key={path}
-                      onClick={() => navigate(path)}
-                      className="text-white/50 text-xs text-left hover:text-white transition-colors"
-                    >
-                      {label}
-                    </button>
+                <p className="text-white/80 text-[11px] font-bold mb-3.5 uppercase tracking-widest">활동</p>
+                <div className="flex flex-col gap-2.5">
+                  {[['프로젝트', '/category/projects'],['세미나', '/category/seminars'],['캠페인', '/category/campaigns'],['인터뷰', '/category/interviews']].map(([label, path]) => (
+                    <button key={path} onClick={() => navigate(path)} className="text-white/45 text-xs text-left hover:text-white transition-colors">{label}</button>
                   ))}
                 </div>
               </div>
               <div>
-                <p className="text-white text-xs font-bold mb-3">이음</p>
-                <div className="flex flex-col gap-2">
-                  {[['소개', '/more'], ['인사이트', '/category/insights']].map(([label, path]) => (
-                    <button
-                      key={path}
-                      onClick={() => navigate(path)}
-                      className="text-white/50 text-xs text-left hover:text-white transition-colors"
-                    >
-                      {label}
-                    </button>
+                <p className="text-white/80 text-[11px] font-bold mb-3.5 uppercase tracking-widest">이음</p>
+                <div className="flex flex-col gap-2.5">
+                  {[['인사말', '/about/greeting'],['IEUM 소개', '/about/intro'],['연혁', '/about/history'],['조직도', '/about/organization']].map(([label, path]) => (
+                    <button key={path} onClick={() => navigate(path)} className="text-white/45 text-xs text-left hover:text-white transition-colors">{label}</button>
                   ))}
                 </div>
               </div>
+              <div>
+                <p className="text-white/80 text-[11px] font-bold mb-3.5 uppercase tracking-widest">소식</p>
+                <div className="flex flex-col gap-2.5">
+                  {[['에세이/칼럼', '/category/essays'],['인사이트', '/category/insights']].map(([label, path]) => (
+                    <button key={path} onClick={() => navigate(path)} className="text-white/45 text-xs text-left hover:text-white transition-colors">{label}</button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Contact */}
+            <div className="flex flex-col gap-3">
+              <p className="text-white/80 text-[11px] font-bold mb-0.5 uppercase tracking-widest">Contact</p>
+              <a href="mailto:hello@reallygreatsite.com" className="flex items-center gap-2 text-white/45 text-xs hover:text-white transition-colors">
+                <i className="fa-solid fa-envelope w-3.5 text-center flex-shrink-0"></i>
+                hello@reallygreatsite.com
+              </a>
+              <div className="flex items-start gap-2 text-white/45 text-xs">
+                <i className="fa-solid fa-location-dot w-3.5 text-center flex-shrink-0 mt-0.5"></i>
+                <span>서울특별시 마포구<br />독막로 76-1 2층</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Legal info */}
+        <div className="max-w-5xl mx-auto px-5 py-5 pb-28 md:pb-5">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-white/25 leading-relaxed">
+              <span>대표자 이찬영</span>
+              <span className="text-white/15">·</span>
+              <span>사업자등록번호 289-67-00756</span>
+              <span className="text-white/15">·</span>
+              <span>서울특별시 마포구 독막로 76-1 2층</span>
+            </div>
+            <div className="flex items-center gap-3 text-[11px] text-white/25 flex-wrap">
+              <button onClick={() => navigate('/privacy')} className="hover:text-white/60 transition-colors">개인정보처리방침</button>
+              <span className="text-white/15">|</span>
+              <button onClick={() => navigate('/terms')} className="hover:text-white/60 transition-colors">이용약관</button>
+              <span className="text-white/15">|</span>
+              <span>© 2025 IEUM. All rights reserved.</span>
             </div>
           </div>
         </div>
