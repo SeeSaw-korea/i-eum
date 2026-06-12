@@ -403,7 +403,9 @@ const ContentDetail: React.FC<ContentDetailProps> = ({
           <button
             onClick={() => {
               if (item.externalLink) {
-                if (item.externalLink.startsWith('/')) {
+                if (item.externalLink === '/free' || item.externalLink === '/fillout') {
+                  window.location.href = item.externalLink;
+                } else if (item.externalLink.startsWith('/')) {
                   navigate(item.externalLink);
                 } else {
                   window.open(item.externalLink, '_blank');

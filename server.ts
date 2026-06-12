@@ -24,6 +24,11 @@ async function startServer() {
     res.sendFile(path.join(process.cwd(), "fillout.html"));
   });
 
+  // Specific route for /free (자유 공모전) to serve hanmunjang-edited.html
+  app.get("/free", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "public", "free", "index.html"));
+  });
+
   // API routes MUST come before Vite middleware
   app.get("/api/regions", async (req, res) => {
     console.log("API call: /api/regions");
@@ -116,6 +121,10 @@ async function startServer() {
     // For now, we'll just handle it here.
     app.get("/fillout", (req, res) => {
       res.sendFile(path.join(process.cwd(), "fillout.html"));
+    });
+
+    app.get("/free", (req, res) => {
+      res.sendFile(path.join(process.cwd(), "hanmunjang-edited.html"));
     });
 
     app.get("/{*splat}", (req, res) => {
