@@ -939,6 +939,11 @@
 <script>
 let currentPage = 1;
 let uploadedFile = null;
+let isSubmitting = false;
+
+// === Google Sheets 연동 설정 ===
+// apps_script.gs를 Google Apps Script에 붙여넣고 "웹 앱으로 배포" 후, 발급된 URL을 아래에 붙여넣으세요.
+const SHEET_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwkrxQS377aZviPcTHd7EdgU6_1cFDwHU9HFER6NEcCm-CP9NbupBNw_tS5DrA95t11/exec';
 
 const pageTitles = ['공모전 소개', '본인 확인', '문장 제출', '내용 확인'];
 
@@ -1113,20 +1118,92 @@ function fillReview() {
   document.getElementById('rv-pledge').innerHTML = '<span class="review-badge">✅ 동의</span>';
 }
 
-function handleNext() {
+async function handleNext() {
   if (currentPage < 4) {
     if (!validatePage(currentPage)) return;
     if (currentPage === 3) fillReview();
     showPage(currentPage + 1);
   } else {
-    // Submit
-    document.getElementById('page4').classList.remove('active');
-    document.getElementById('successPage').classList.add('active');
-    document.getElementById('stepperWrap').style.display = 'none';
-    document.getElementById('bottomBar').style.display = 'none';
-    document.getElementById('topbarTitle').textContent = '제출 완료';
-    document.getElementById('topbarPage').textContent = '';
+    if (isSubmitting) return;
+    isSubmitting = true;
+    const btn = document.getElementById('mainBtn');
+    const originalLabel = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = '제출 중...';
+    try {
+      await submitToSheet();
+      document.getElementById('page4').classList.remove('active');
+      document.getElementById('successPage').classList.add('active');
+      document.getElementById('stepperWrap').style.display = 'none';
+      document.getElementById('bottomBar').style.display = 'none';
+      document.getElementById('topbarTitle').textContent = '제출 완료';
+      document.getElementById('topbarPage').textContent = '';
+    } catch (err) {
+      console.error(err);
+      alert('제출 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.\n\n' + (err && err.message ? err.message : ''));
+      btn.disabled = false;
+      btn.textContent = originalLabel;
+      isSubmitting = false;
+    }
   }
+}
+
+function fileToBase64(file) {
+  return new Promise(function(resolve, reject) {
+    const reader = new FileReader();
+    reader.onload = function() {
+      // data:image/png;base64,XXXX → base64 부분만 추출
+      const result = String(reader.result || '');
+      const commaIdx = result.indexOf(',');
+      resolve(commaIdx >= 0 ? result.slice(commaIdx + 1) : result);
+    };
+    reader.onerror = function() { reject(reader.error || new Error('파일 읽기 실패')); };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function submitToSheet() {
+  if (!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.indexOf('PASTE_YOUR') === 0) {
+    throw new Error('SHEET_WEBAPP_URL이 설정되지 않았습니다.');
+  }
+
+  const payload = {
+    name: document.getElementById('f-name').value.trim(),
+    age: document.getElementById('f-age').value.trim(),
+    phone: document.getElementById('f-phone').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    region: selectedValues.region || '',
+    addr: document.getElementById('f-addr').value.trim(),
+    job: selectedValues.job || '',
+    channel: selectedValues.channel || '',
+    q1: document.getElementById('q1').value.trim(),
+    q2: document.getElementById('q2').value.trim(),
+    q3: document.getElementById('q3').value.trim(),
+    q4: document.getElementById('q4').value.trim(),
+    pledge: document.getElementById('pledge-check').checked ? 'Y' : 'N',
+    privacy: document.getElementById('pledge-check').checked ? 'Y' : 'N',
+    fileName: '',
+    fileMime: '',
+    fileData: ''
+  };
+
+  if (uploadedFile) {
+    payload.fileName = uploadedFile.name;
+    payload.fileMime = uploadedFile.type || 'application/octet-stream';
+    payload.fileData = await fileToBase64(uploadedFile);
+  }
+
+  // Apps Script 웹앱은 text/plain POST를 CORS preflight 없이 허용함
+  const res = await fetch(SHEET_WEBAPP_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!res.ok) throw new Error('서버 응답 오류 (HTTP ' + res.status + ')');
+  const data = await res.json().catch(function() { return {}; });
+  if (data && data.ok === false) throw new Error(data.error || '제출 실패');
+  return data;
 }
 
 function goBack() {
