@@ -936,6 +936,7 @@
   </button>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 let currentPage = 1;
 let uploadedFile = null;
@@ -944,6 +945,16 @@ let isSubmitting = false;
 // === Google Sheets 연동 설정 ===
 // apps_script.gs를 Google Apps Script에 붙여넣고 "웹 앱으로 배포" 후, 발급된 URL을 아래에 붙여넣으세요.
 const SHEET_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwkrxQS377aZviPcTHd7EdgU6_1cFDwHU9HFER6NEcCm-CP9NbupBNw_tS5DrA95t11/exec';
+
+// === Supabase 연동 설정 ===
+// 다른 공모전 폼(lib/supabase.ts)과 동일한 프로젝트/anon 키를 사용합니다.
+const SUPABASE_URL = 'https://atzyvbifvrlhwploqmpr.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0enl2YmlmdnJsaHdwbG9xbXByIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMjQzNTEsImV4cCI6MjA5MzgwMDM1MX0.6ap0rxCQXVsShJXTFb5UIKN4ykog32BLL1sBZN6vEMo';
+const SUPABASE_TABLE = 'AD-ieum-free';
+const SUPABASE_BUCKET = 'free';
+const sbClient = (window.supabase && typeof window.supabase.createClient === 'function')
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
 
 const pageTitles = ['공모전 소개', '본인 확인', '문장 제출', '내용 확인'];
 
@@ -1131,7 +1142,12 @@ async function handleNext() {
     btn.disabled = true;
     btn.textContent = '제출 중...';
     try {
-      await submitToSheet();
+      // Supabase 저장은 실패해도 제출(시트)을 막지 않도록 병행 처리
+      const sheetPromise = submitToSheet();
+      const supaPromise = submitToSupabase().catch(function(e) {
+        console.error('Supabase 저장 실패:', e);
+      });
+      await Promise.all([sheetPromise, supaPromise]);
       document.getElementById('page4').classList.remove('active');
       document.getElementById('successPage').classList.add('active');
       document.getElementById('stepperWrap').style.display = 'none';
@@ -1204,6 +1220,60 @@ async function submitToSheet() {
   const data = await res.json().catch(function() { return {}; });
   if (data && data.ok === false) throw new Error(data.error || '제출 실패');
   return data;
+}
+
+// Supabase 저장: 다른 공모전 폼(FormContestC)과 동일하게 클라이언트에서 직접 insert.
+// 첨부파일이 있으면 Storage 버킷에 업로드 후 public URL을 함께 저장한다.
+async function submitToSupabase() {
+  if (!sbClient) {
+    console.warn('Supabase client가 로드되지 않아 Supabase 저장을 건너뜁니다.');
+    return;
+  }
+
+  const receiptNum = 'FF-' + Date.now().toString().slice(-6);
+  let fileUrl = '';
+
+  if (uploadedFile) {
+    try {
+      const ext = (uploadedFile.name.split('.').pop() || 'dat').toLowerCase();
+      const path = 'submissions/' + receiptNum + '.' + ext;
+      const up = await sbClient.storage.from(SUPABASE_BUCKET).upload(path, uploadedFile, {
+        contentType: uploadedFile.type || 'application/octet-stream',
+        upsert: false
+      });
+      if (up && up.data) {
+        const pub = sbClient.storage.from(SUPABASE_BUCKET).getPublicUrl(up.data.path);
+        if (pub && pub.data) fileUrl = pub.data.publicUrl;
+      }
+    } catch (e) {
+      // Storage 미설정 등으로 실패해도 텍스트 데이터는 저장되도록 무시
+      console.error('Storage 업로드 실패:', e);
+    }
+  }
+
+  const pledged = document.getElementById('pledge-check').checked;
+  const row = {
+    name: document.getElementById('f-name').value.trim(),
+    age: document.getElementById('f-age').value.trim(),
+    phone: document.getElementById('f-phone').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    region: selectedValues.region || '',
+    address_detail: document.getElementById('f-addr').value.trim(),
+    job: selectedValues.job || '',
+    channel: selectedValues.channel || '',
+    q1: document.getElementById('q1').value.trim(),
+    q2: document.getElementById('q2').value.trim(),
+    q3: document.getElementById('q3').value.trim(),
+    q4: document.getElementById('q4').value.trim(),
+    pledge_agreed: pledged,
+    privacy_agreed: pledged,
+    file_url: fileUrl,
+    receipt_number: receiptNum
+  };
+
+  const ins = await sbClient.from(SUPABASE_TABLE).insert(row);
+  if (ins && ins.error) throw ins.error;
+  return ins;
 }
 
 function goBack() {
