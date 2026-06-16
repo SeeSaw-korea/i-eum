@@ -142,7 +142,7 @@ const FormContestA: React.FC = () => {
             <i className="fa-solid fa-chevron-left text-ieumDark"></i>
           </button>
           <div className="flex-1">
-            <p className="text-xs text-ieumMuted font-medium">SEESAW 아이디어 공모전</p>
+            <p className="text-xs text-ieumMuted font-medium">IEUM 아이디어 공모전</p>
             <p className="text-sm font-bold text-ieumDark">{STEP_LABELS[step - 1]}</p>
           </div>
           <span className="text-xs font-bold text-ieumOrange">{step} / 4</span>
