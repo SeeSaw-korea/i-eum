@@ -402,9 +402,16 @@ const ContentDetail: React.FC<ContentDetailProps> = ({
         ) : (
           <button
             onClick={() => {
-              window.open('https://forms.fillout.com/t/mjNvvUn1quus', '_blank');
+              const link = item.externalLink?.trim();
+              if (!link) return;
+              if (link.startsWith('/')) {
+                navigate(link);
+              } else {
+                window.open(link, '_blank');
+              }
             }}
-            className="flex-1 bg-gradient-to-r from-ieumAmber to-ieumGold hover:opacity-90 text-white font-black text-base h-[54px] rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-ieumAmber/30 active:scale-[0.98] transition-all"
+            disabled={!item.externalLink?.trim()}
+            className="flex-1 bg-gradient-to-r from-ieumAmber to-ieumGold hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-white font-black text-base h-[54px] rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-ieumAmber/30 active:scale-[0.98] transition-all"
           >
             <span>신청하기</span>
             <i className="fa-solid fa-arrow-right text-[14px]"></i>
