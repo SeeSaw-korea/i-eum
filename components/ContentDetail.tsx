@@ -402,17 +402,7 @@ const ContentDetail: React.FC<ContentDetailProps> = ({
         ) : (
           <button
             onClick={() => {
-              if (item.externalLink) {
-                if (item.externalLink === '/free' || item.externalLink === '/fillout') {
-                  window.location.href = item.externalLink;
-                } else if (item.externalLink.startsWith('/')) {
-                  navigate(item.externalLink);
-                } else {
-                  window.open(item.externalLink, '_blank');
-                }
-              } else {
-                alert('해당 캠페인 채팅방으로 이동합니다.');
-              }
+              alert('현재 신청 링크 점검 시간입니다.\n점검 시간: 15:00 ~ 16:00\n\n자세한 사항은 관리자에게 문의 부탁드립니다.');
             }}
             className="flex-1 bg-gradient-to-r from-ieumAmber to-ieumGold hover:opacity-90 text-white font-black text-base h-[54px] rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-ieumAmber/30 active:scale-[0.98] transition-all"
           >
