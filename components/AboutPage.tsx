@@ -116,14 +116,6 @@ const Greeting: React.FC = () => (
             <p className="text-white font-black text-base leading-snug">감정에서 출발해<br />사회와 연결되고<br />행동으로 변화를 만드는</p>
             <p className="text-ieumOrange font-black text-lg mt-2">청년들의 이야기</p>
           </div>
-          <div className="border border-ieumBorder rounded-2xl p-5 text-center bg-white">
-            <p className="text-ieumDark font-bold text-sm mb-1">이음과 함께하고 싶으신가요?</p>
-            <p className="text-ieumMuted text-xs mb-4 leading-relaxed">이음의 활동에 참여하거나<br/>파트너로 함께해주세요.</p>
-            <button
-              onClick={() => window.open('https://pf.kakao.com/_dxlLCX/friend', '_blank')}
-              className="w-full bg-ieumOrange text-white text-sm font-bold py-3 rounded-xl hover:bg-ieumGold transition-colors"
-            >카카오톡으로 문의하기</button>
-          </div>
         </div>
       </div>
     </div>
@@ -396,10 +388,6 @@ const Intro: React.FC = () => (
             </div>
           ))}
         </div>
-        <button
-          onClick={() => window.open('https://pf.kakao.com/_dxlLCX/friend', '_blank')}
-          className="bg-ieumOrange text-white text-sm font-bold px-8 py-3 rounded-xl hover:bg-ieumGold transition-colors"
-        >파트너십 문의하기 <i className="fa-solid fa-arrow-right ml-1.5"></i></button>
       </div>
 
     </div>
@@ -513,19 +501,6 @@ const History: React.FC = () => {
           ))}
         </div>
 
-        {/* 하단 CTA */}
-        <div className="mt-14 bg-ieumNavy rounded-2xl p-8 text-center">
-          <p className="text-ieumOrange text-xs font-bold uppercase tracking-widest mb-2">Coming Next</p>
-          <h3 className="text-white text-xl font-black mb-3">이음의 다음 이야기를 함께 만들어가요</h3>
-          <p className="text-white/50 text-sm mb-6 leading-relaxed">
-            이음의 다음 챕터는 아직 쓰여지지 않았습니다.<br />
-            함께 기획하고, 실행하고, 기록하는 청년을 기다립니다.
-          </p>
-          <button
-            onClick={() => window.open('https://pf.kakao.com/_dxlLCX/friend', '_blank')}
-            className="bg-ieumOrange text-white text-sm font-bold px-8 py-3 rounded-xl hover:bg-ieumGold transition-colors"
-          >함께하기 <i className="fa-solid fa-arrow-right ml-1.5"></i></button>
-        </div>
       </div>
     </div>
   );
@@ -716,16 +691,6 @@ const Organization: React.FC = () => (
                 <span key={i} className="text-xs font-semibold text-ieumNavy bg-white border border-ieumBorder px-3 py-1.5 rounded-full">{r}</span>
               ))}
             </div>
-          </div>
-          <div className="flex-shrink-0 flex flex-col gap-3">
-            <button
-              onClick={() => window.open('https://pf.kakao.com/_dxlLCX/friend', '_blank')}
-              className="bg-ieumOrange text-white text-sm font-bold px-8 py-3 rounded-xl hover:bg-ieumGold transition-colors whitespace-nowrap"
-            >팀원 지원하기 <i className="fa-solid fa-arrow-right ml-1.5"></i></button>
-            <button
-              onClick={() => window.open('https://pf.kakao.com/_dxlLCX/friend', '_blank')}
-              className="bg-white border border-ieumBorder text-ieumDark text-sm font-bold px-8 py-3 rounded-xl hover:border-ieumOrange transition-colors whitespace-nowrap"
-            >파트너십 문의</button>
           </div>
         </div>
       </div>

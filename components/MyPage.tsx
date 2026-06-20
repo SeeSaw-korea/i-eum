@@ -6,8 +6,6 @@ import { getImageUrl } from '../lib/imageUrl';
 import LoginPrompt from './LoginPrompt';
 import { useNavigate } from 'react-router-dom';
 
-const KAKAO_CHANNEL_ID = '_dxlLCX';
-
 interface MyPageProps {
   appState: AppState;
   toggleWishlist: (id: string) => void;
@@ -18,10 +16,6 @@ interface MyPageProps {
 const MyPage: React.FC<MyPageProps> = ({ appState, toggleWishlist, onLogout, notifications }) => {
   const navigate = useNavigate();
   const { contents } = useContents();
-
-  const handleKakaoChannelAdd = () => {
-    window.open(`https://pf.kakao.com/${KAKAO_CHANNEL_ID}/friend`, '_blank');
-  };
 
   if (!appState.user) {
     return <LoginPrompt onLoginClick={() => navigate('/login')} />;
@@ -96,28 +90,6 @@ const MyPage: React.FC<MyPageProps> = ({ appState, toggleWishlist, onLogout, not
             ))}
           </div>
         )}
-      </section>
-
-      {/* 카카오 채널 추가 배너 */}
-      <section>
-        <button
-          onClick={handleKakaoChannelAdd}
-          className="w-full rounded-2xl overflow-hidden flex items-center gap-4 px-5 py-4 shadow-sm active:scale-[0.98] transition-all"
-          style={{ backgroundColor: '#FEE500' }}
-        >
-          <div className="w-11 h-11 flex-shrink-0 flex items-center justify-center">
-            <svg viewBox="0 0 24 24" className="w-10 h-10" fill="#3C1E1E">
-              <path d="M12 3C6.477 3 2 6.477 2 10.8c0 2.7 1.47 5.09 3.75 6.57l-.96 3.56 4.15-2.74C10.26 18.38 11.12 18.5 12 18.5c5.523 0 10-3.477 10-7.7S17.523 3 12 3z"/>
-            </svg>
-          </div>
-          <div className="text-left flex-1">
-            <p className="text-sm font-black text-[#3C1E1E]">이음 카카오톡 채널 추가</p>
-            <p className="text-xs text-[#3C1E1E]/70 font-medium mt-0.5">채널 추가하고 소식을 가장 먼저 받아보세요</p>
-          </div>
-          <div className="flex-shrink-0 bg-[#3C1E1E]/10 rounded-full px-3 py-1">
-            <span className="text-[11px] font-black text-[#3C1E1E]">추가하기</span>
-          </div>
-        </button>
       </section>
 
       {/* Settings Menu */}

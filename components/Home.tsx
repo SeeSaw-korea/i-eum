@@ -166,7 +166,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
 
               <div className="flex flex-wrap gap-3 mb-10">
                 <button
-                  onClick={() => navigate('/more')}
+                  onClick={() => navigate('/about/intro')}
                   className="border border-white/20 text-white/70 font-semibold px-7 py-3.5 rounded-2xl text-sm hover:bg-white/10 transition-all"
                 >
                   이음 소개
@@ -672,7 +672,7 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
               활동 둘러보기 <i className="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
             </button>
             <button
-              onClick={() => navigate('/more')}
+              onClick={() => navigate('/about/intro')}
               className="border-2 border-white/40 text-white font-bold px-8 py-4 rounded-2xl text-sm hover:bg-white/15 transition-all"
             >
               이음 소개
@@ -695,14 +695,6 @@ const Home: React.FC<HomeProps> = ({ appState, toggleWishlist }) => {
                 감정에서 출발해 사회와 연결되고,<br />
                 행동으로 변화를 만드는 청년들
               </p>
-              <button
-                onClick={() => window.open('https://pf.kakao.com/_dxlLCX/friend', '_blank')}
-                className="mt-5 inline-flex items-center gap-2 text-[11px] font-bold px-3.5 py-2 rounded-lg transition-opacity hover:opacity-80"
-                style={{ backgroundColor: '#FEE500', color: '#3C1E1E' }}
-              >
-                <i className="fa-solid fa-comment"></i>
-                카카오채널 문의
-              </button>
             </div>
 
             {/* Nav links */}

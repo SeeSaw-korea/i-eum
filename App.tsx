@@ -7,7 +7,6 @@ import { Category, UserProfile, AppState } from './types';
 import Onboarding from './components/Onboarding';
 import Home from './components/Home';
 import CategoryList from './components/CategoryList';
-import MorePage from './components/MorePage';
 import CategoryDetail from './components/CategoryDetail';
 import ContentDetail from './components/ContentDetail';
 import SearchPage from './components/SearchPage';
@@ -174,7 +173,6 @@ const App: React.FC = () => {
     if (location.pathname === '/') return 'home';
     if (location.pathname.startsWith('/category')) return 'category';
     if (location.pathname.startsWith('/about')) return 'about';
-    if (location.pathname === '/more') return 'more';
     return '';
   };
   const activeTab = getActiveTab();
@@ -351,7 +349,6 @@ const App: React.FC = () => {
           <Route path="/625-test-a/*" element={<TypeTest625 variant="A" basePath="/625-test-a" />} />
           <Route path="/625-test-b/*" element={<TypeTest625 variant="B" basePath="/625-test-b" />} />
           <Route path="/project-minwon" element={<ProjectMinwonWrapper />} />
-          <Route path="/more" element={<MorePage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
@@ -372,10 +369,6 @@ const App: React.FC = () => {
           <button onClick={() => navigate('/category')} className={`flex flex-col items-center gap-1 min-w-[52px] transition-colors ${activeTab === 'category' ? 'text-ieumOrange' : 'text-ieumMuted'}`}>
             <i className="fa-solid fa-layer-group text-xl"></i>
             <span className="text-[10px] font-semibold">프로그램</span>
-          </button>
-          <button onClick={() => navigate('/more')} className={`flex flex-col items-center gap-1 min-w-[52px] transition-colors ${activeTab === 'more' ? 'text-ieumOrange' : 'text-ieumMuted'}`}>
-            <i className="fa-solid fa-grip text-xl"></i>
-            <span className="text-[10px] font-semibold">더보기</span>
           </button>
         </nav>
       )}
