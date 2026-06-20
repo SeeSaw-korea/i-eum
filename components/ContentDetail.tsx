@@ -405,7 +405,7 @@ const ContentDetail: React.FC<ContentDetailProps> = ({
               const link = item.externalLink?.trim();
               if (!link) return;
               if (link.startsWith('/')) {
-                navigate(link);
+                window.location.href = link;
               } else {
                 window.open(link, '_blank');
               }
