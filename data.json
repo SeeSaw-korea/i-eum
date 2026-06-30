@@ -79,6 +79,7 @@
       "description": "1945년이 되찾은 자유, 2026년의 나는 무엇을 이어갈까? '나에게 자유란 _______ 다.' 한 문장으로 자유를 이어가는 자유 공모전입니다.",
       "imageUrl": "/image/hanmunjang-poster.jpg",
       "deadline": "진행중",
+      "autoCompleteAt": "2026-06-30T20:00:00+09:00",
       "tag": "자유공모전",
       "detailedSections": [
         {

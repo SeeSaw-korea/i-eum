@@ -47,6 +47,8 @@ export interface ContentItem {
   detailImages?: string[];
   externalLink?: string;
   deadline?: string;
+  /** ISO datetime. 이 시각이 지나면 자동으로 '진행완료' 처리됩니다 (예약 마감). */
+  autoCompleteAt?: string;
   tag?: string;
   isWishlisted?: boolean;
   detailedSections?: {
