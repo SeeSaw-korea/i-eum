@@ -27,6 +27,7 @@ import AboutPage from './components/AboutPage';
 import IeumLogo from './components/IeumLogo';
 import PrivacyPage from './components/PrivacyPage';
 import TermsPage from './components/TermsPage';
+import PopupAd from './components/PopupAd';
 
 /* ── 드롭다운 메뉴 정의 ── */
 const NAV_ITEMS = [
@@ -201,6 +202,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-ieumCream">
+      <PopupAd />
       {!isFullScreenPage && (
         <header className="sticky top-0 z-50 bg-white border-b border-ieumBorder shadow-sm">
           <div className="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between">
